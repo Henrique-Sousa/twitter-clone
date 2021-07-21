@@ -7,4 +7,6 @@ const User = sequelize.define('user', {
   nickname: { type: DataTypes.STRING }
 }, DISABLE_SEQUELIZE_DEFAULTS);
 
+User.sync();
+
 module.exports = User
