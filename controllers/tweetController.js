@@ -23,3 +23,12 @@ exports.show = (req, res) => {
 	.findByPk(req.params.tweet_id)
 	.then(result => res.send(result));
 }
+
+exports.update = (req, res) => {
+	Tweet.
+	update(
+		{ text: req.body.text },
+		{ where: { id: req.params.tweet_id } }
+	)
+	.then(result => res.send(result));
+}
