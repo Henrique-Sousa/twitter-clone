@@ -32,3 +32,11 @@ exports.update = (req, res) => {
 	)
 	.then(result => res.send(result));
 }
+
+exports.destroy = (req, res) => {
+	Tweet.
+	destroy({
+		where: { id: req.params.tweet_id } 
+	}).then(res.end());
+}
+
