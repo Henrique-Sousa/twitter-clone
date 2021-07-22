@@ -17,3 +17,9 @@ exports.create = (req, res) => {
 	})
 	.then(tweet => res.send(tweet));
 }
+
+exports.show = (req, res) => {
+	Tweet
+	.findByPk(req.params.tweet_id)
+	.then(result => res.send(result));
+}
