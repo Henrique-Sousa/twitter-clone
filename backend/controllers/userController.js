@@ -7,3 +7,10 @@ exports.index = (req, res) => {
 		res.send(results);
   	});	
 }
+
+exports.show = (req, res) => {
+	User
+	.findByPk(req.params.user_id)
+	.then(result => res.send(result));
+}
+
