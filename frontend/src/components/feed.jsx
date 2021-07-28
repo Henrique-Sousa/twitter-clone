@@ -17,22 +17,25 @@ class Feed extends Component {
 	}
 
 	async componentDidMount() {
-		try {
-			const tweets = await this.fetchJSON(`${this.apiURL}/tweets`);
-			for (let tweet of tweets) {
-				try {
-					const user = await this.fetchJSON(`${this.apiURL}/users/${tweet.author}`);
-					tweet.author = user.nickname;
-					this.setState({
-						tweets: this.state.tweets.concat([tweet])
-					});
-				} catch(err) {
-					console.log(err);
+		let tweets, user;
+		do {
+			try {
+				tweets = await this.fetchJSON(`${this.apiURL}/tweets`);
+				for (let tweet of tweets) {
+					try {
+						user = await this.fetchJSON(`${this.apiURL}/users/${tweet.author}`);
+						tweet.author = user.nickname;
+						this.setState({
+							tweets: this.state.tweets.concat([tweet])
+						});
+					} catch(err) {
+						console.log(err);
+					}
 				}
+			} catch(err) {
+				console.log(err);
 			}
-		} catch(err) {
-			console.log(err);
-		}
+		} while (tweets === undefined || user === undefined);
 	}
 
 	render() {
