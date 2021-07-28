@@ -4,29 +4,35 @@ import Tweet from './tweet';
 class Feed extends Component { 
 	constructor() {
 		super();
+		this.apiURL = 'http://127.0.0.1:3001';
 		this.state = {
 			tweets: []
 		};
 	}
 
-	componentDidMount() {
-		fetch('http://127.0.0.1:3001/tweets', { mode: 'cors' })
-			.then(res => res.json())
-			.then(tweets => {
-				for (let tweet of tweets) {
-					fetch(`http://127.0.0.1:3001/users/${tweet.author}`, { mode: 'cors' })
-						.then(res => res.json())
-						.then(user => 
-							{
-								tweet.author = user.nickname;
-								this.setState({
-									tweets: this.state.tweets.concat([tweet])
-								});
-							})
-						.catch(err => console.log(err));
+	async fetchJSON(url) {
+		const response = await fetch(url, { mode: 'cors' });
+		const tweets = await response.json();
+		return tweets;
+	}
+
+	async componentDidMount() {
+		try {
+			const tweets = await this.fetchJSON(`${this.apiURL}/tweets`);
+			for (let tweet of tweets) {
+				try {
+					const user = await this.fetchJSON(`${this.apiURL}/users/${tweet.author}`);
+					tweet.author = user.nickname;
+					this.setState({
+						tweets: this.state.tweets.concat([tweet])
+					});
+				} catch(err) {
+					console.log(err);
 				}
-			})
-			.catch(err => console.log(err));
+			}
+		} catch(err) {
+			console.log(err);
+		}
 	}
 
 	render() {
