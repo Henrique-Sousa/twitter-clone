@@ -1,16 +1,12 @@
 const User = require('../models/user');
 
-exports.index = (req, res) => {
-	User	
-	.findAll()
-  	.then(results => {
-		res.send(results);
-  	});	
+exports.index = async (req, res) => {
+	const results = await User.findAll();
+	res.send(results);
 }
 
-exports.show = (req, res) => {
-	User
-	.findByPk(req.params.user_id)
-	.then(result => res.send(result));
+exports.show = async (req, res) => {
+	const result = await User.findByPk(req.params.user_id)
+	res.send(result);
 }
 
