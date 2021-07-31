@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import Tweet from './tweet';
 
 class Feed extends Component { 
-	constructor() {
-		super();
-		this.apiURL = 'http://127.0.0.1:3001';
+	constructor(props) {
+		super(props);
 		this.state = {
 			tweets: []
 		};
@@ -20,10 +19,10 @@ class Feed extends Component {
 		let tweets, user;
 		do {
 			try {
-				tweets = await this.fetchJSON(`${this.apiURL}/tweets`);
+				tweets = await this.fetchJSON(`${this.props.apiURL}/tweets`);
 				for (let tweet of tweets) {
 					try {
-						user = await this.fetchJSON(`${this.apiURL}/users/${tweet.author}`);
+						user = await this.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
 						tweet.author = user.nickname;
 						this.setState({
 							tweets: this.state.tweets.concat([tweet])
