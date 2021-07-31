@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Tweet from './tweet';
+import WhatsHappening from './whats-happening';
 
 class Feed extends Component { 
 	constructor(props) {
@@ -45,6 +46,7 @@ class Feed extends Component {
 		}
 		return (
 			<div>
+				<WhatsHappening apiURL={this.props.apiURL} />
 				{tweets}
 			</div>
     	);
