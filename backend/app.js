@@ -7,17 +7,17 @@ const createError = require('http-errors');
 app.use(express.json());
 
 app.all('*', function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-  next()
+	res.setHeader('Access-Control-Allow-Origin', '*')
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With')
+	res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+	next()
 });
 
 app.use('/users', users_router);
 app.use('/tweets', tweets_router);
 
 app.use(function(req, res, next) {
-  next(createError(404));
+	next(createError(404));
 });
 
 app.use(function(err, req, res, next) {
