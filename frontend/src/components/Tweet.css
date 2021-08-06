@@ -1,8 +1,8 @@
-.Tweet {
+.tweet {
 	border: 1px solid #eee;
 	padding: 20px;
 }
 
-.Tweet * {
+.tweet * {
 	font-size: 15px;
 }

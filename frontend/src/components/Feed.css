@@ -1,10 +1,10 @@
 @import ../base.css;
 
-.Feed {
+.feed {
 	width: 600px; 
 }
 
-.Feed > * {
+.feed > * {
 	border: 1px solid #eee;
 	border-top: none;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Feed from './components/feed';
-import Header from './components/header';
-import Sidebar from './components/sidebar';
+import Feed from './components/Feed';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import './App.css';
 
 class App extends Component {

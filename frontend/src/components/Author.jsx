@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './author.css';
+import './Author.css';
 
 class Author extends Component { 
 	render() {
 
 		return (
-			<p className="Author">
+			<p className="author">
 				<span>{this.props.nickName}</span>
 				<span>{this.props.name}</span>
 			</p>
