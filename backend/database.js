@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const createError = require('http-errors');
 
 const connection = require('./connection.json');
 
@@ -16,5 +17,13 @@ const sequelize = new Sequelize({
 	dialect: 'mysql',
 	operatorsAliases: false
 });
+
+(async () => {
+	try {
+		await Sequelize.authenticate();
+	} catch (error) {
+		createError(500);
+	}
+})();
 
 module.exports = { sequelize, DISABLE_SEQUELIZE_DEFAULTS }
