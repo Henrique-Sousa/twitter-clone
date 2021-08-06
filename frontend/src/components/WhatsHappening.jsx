@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './WhatsHappening.css';
 
 class WhatsHappening extends Component { 
 	constructor(props) {
@@ -34,6 +35,8 @@ class WhatsHappening extends Component {
 				<textarea
 					name="text"
 					placeholder="What's happening?"
+					minlength="1"
+					maxlength="280"
 					onChange={ e => this.setState({text: e.target.value}) }
 				/>
 				<div>
