@@ -1,0 +1,11 @@
+@import ../base.css;
+
+.Feed {
+	width: 600px; 
+}
+
+.Feed > * {
+	border: 1px solid #eee;
+	border-top: none;
+}
+

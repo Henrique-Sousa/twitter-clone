@@ -33,6 +33,7 @@ class WhatsHappening extends Component {
 			<form onSubmit={this.submit}> 
 				<textarea
 					name="text"
+					placeholder="What's happening?"
 					onChange={ e => this.setState({text: e.target.value}) }
 				/>
 				<div>

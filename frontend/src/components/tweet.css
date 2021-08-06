@@ -1,3 +1,8 @@
 .Tweet {
-	border: 1px solid black;
+	border: 1px solid #eee;
+	padding: 20px;
+}
+
+.Tweet * {
+	font-size: 15px;
 }

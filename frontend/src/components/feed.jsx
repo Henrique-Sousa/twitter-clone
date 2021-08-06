@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Tweet from './tweet';
 import WhatsHappening from './whats-happening';
+import Tweet from './tweet';
+import './feed.css';
 
 class Feed extends Component { 
 	constructor(props) {
@@ -45,7 +46,8 @@ class Feed extends Component {
 			tweets.push(<Tweet key={index} author={author} text={text} />)
 		}
 		return (
-			<div>
+			<div className="Feed">
+				<div><h1>Home</h1></div>
 				<WhatsHappening apiURL={this.props.apiURL} />
 				{tweets}
 			</div>

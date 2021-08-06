@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Feed from './components/feed';
+import Header from './components/header';
+import Sidebar from './components/sidebar';
+import './App.css';
 
 class App extends Component {
 
@@ -11,7 +14,9 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<Header />
 				<Feed apiURL={this.apiURL} />
+				<Sidebar />
 			</div>
 		);
 	}
