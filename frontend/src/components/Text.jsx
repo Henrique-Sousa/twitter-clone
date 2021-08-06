@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import './Text.css';
 
 class Text extends Component { 
 	render() {
 		return (
-			<p>{this.props.value}</p>
+			<p className="text">{this.props.value}</p>
     	);
 	}
 }
