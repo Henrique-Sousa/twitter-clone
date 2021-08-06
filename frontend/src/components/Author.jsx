@@ -3,7 +3,6 @@ import './Author.css';
 
 class Author extends Component { 
 	render() {
-
 		return (
 			<p className="author">
 				<span>{this.props.nickName}</span>
