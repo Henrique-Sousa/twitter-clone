@@ -3,8 +3,12 @@ import './author.css';
 
 class Author extends Component { 
 	render() {
+
 		return (
-			<p className="Author">{this.props.value}</p>
+			<p className="Author">
+				<span>{this.props.nickName}</span>
+				<span>{this.props.name}</span>
+			</p>
     	);
 	}
 }

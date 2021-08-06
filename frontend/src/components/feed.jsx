@@ -25,7 +25,8 @@ class Feed extends Component {
 				for (let tweet of tweets) {
 					try {
 						user = await this.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
-						tweet.author = user.nickname;
+						tweet.authorName = user.name;
+						tweet.authorNickName = user.nickname;
 						this.setState({
 							tweets: this.state.tweets.concat([tweet])
 						});
@@ -42,8 +43,8 @@ class Feed extends Component {
 	render() {
 		const tweets = [];
 		for (const [index, tweet] of this.state.tweets.entries()) {
-			const { author, text } = tweet;
-			tweets.push(<Tweet key={index} author={author} text={text} />)
+			const { authorName, authorNickName, text } = tweet;
+			tweets.push(<Tweet key={index} authorName={authorName} authorNickName={authorNickName} text={text} />)
 		}
 		return (
 			<div className="Feed">
