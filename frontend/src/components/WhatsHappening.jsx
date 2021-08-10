@@ -6,7 +6,7 @@ class WhatsHappening extends Component {
 		super(props);
 		this.state = {
 			author: -1,
-			text: ""
+			text: '' 
 		};
 
 		this.submit = this.submit.bind(this);
