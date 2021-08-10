@@ -4,7 +4,7 @@ import './AuthorName.css';
 class AuthorName extends Component { 
 	render() {
 		return (
-			<span className="author__name"> @{this.props.value}</span>
+			<span className="tweet__author-name"> @{this.props.value}</span>
     	);
 	}
 }

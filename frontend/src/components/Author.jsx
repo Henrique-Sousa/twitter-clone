@@ -5,7 +5,7 @@ import AuthorNickName from './AuthorNickName';
 class Author extends Component { 
 	render() {
 		return (
-			<p className="author">
+			<p className="tweet__author-area">
 				<AuthorNickName value={this.props.nickName} />
 				<AuthorName value={this.props.name} />
 			</p>
