@@ -20,7 +20,7 @@ class WhatsHappening extends Component {
 			text: this.state.text
 		}
 
-		if (tweet.text != '' && tweet.author >= 0) {
+		if (tweet.text !== '' && tweet.author >= 0) {
 			await fetch(`${this.props.apiURL}/tweets`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
