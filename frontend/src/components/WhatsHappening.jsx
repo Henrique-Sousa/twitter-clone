@@ -35,8 +35,8 @@ class WhatsHappening extends Component {
 				<textarea
 					name="text"
 					placeholder="What's happening?"
-					minlength="1"
-					maxlength="280"
+					minLength="1"
+					maxLength="280"
 					onChange={ e => this.setState({text: e.target.value}) }
 				/>
 				<div>
