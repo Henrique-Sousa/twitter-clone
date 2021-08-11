@@ -3,7 +3,7 @@ import WhatsHappening from './WhatsHappening';
 import Tweet from './Tweet';
 import './Feed.css';
 
-class Feed extends Component { 
+export default class Feed extends Component { 
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -53,6 +53,4 @@ class Feed extends Component {
     	);
 	}
 }
-
-export default Feed;
 
