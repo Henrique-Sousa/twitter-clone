@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import WhatsHappening from './WhatsHappening';
 import Tweet from './Tweet';
 import './Feed.css';
@@ -41,16 +41,14 @@ class Feed extends Component {
 	}
 
 	render() {
-		const tweets = [];
-		for (const [index, tweet] of this.state.tweets.entries()) {
-			const { authorName, authorNickName, text } = tweet;
-			tweets.push(<Tweet key={index} authorName={authorName} authorNickName={authorNickName} text={text} />)
-		}
 		return (
 			<div className="feed">
 				<div><h1>Home</h1></div>
 				<WhatsHappening apiURL={this.props.apiURL} />
-				{tweets}
+				{this.state.tweets.map(tweet => 
+					<Tweet key={tweet.id} authorName={tweet.authorName} authorNickName={tweet.authorNickName} text={tweet.text} />
+				)}
+
 			</div>
     	);
 	}
