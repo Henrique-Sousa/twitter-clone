@@ -1,12 +1,6 @@
-import React, { Component } from 'react';
 import './AuthorName.css';
 
-class AuthorName extends Component { 
-	render() {
-		return (
-			<span className="tweet__author-name"> @{this.props.value}</span>
-    	);
-	}
+export default function AuthorName(props) {
+	return <span className="tweet__author-name"> @{props.value}</span>;
 }
 
-export default AuthorName;
