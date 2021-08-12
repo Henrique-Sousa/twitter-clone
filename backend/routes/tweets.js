@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const tweet_controller = require('../controllers/tweetController');
+const tweetController = require('../controllers/tweetController');
 
-router.get('/', tweet_controller.index);
-router.post('/', tweet_controller.create);
-router.get('/:tweet_id', tweet_controller.show);
-router.put('/:tweet_id', tweet_controller.update);
-router.delete('/:tweet_id', tweet_controller.destroy);
+router.get('/', tweetController.index);
+router.post('/', tweetController.create);
+router.get('/:tweet_id', tweetController.show);
+router.put('/:tweet_id', tweetController.update);
+router.delete('/:tweet_id', tweetController.destroy);
 
 module.exports = router;
