@@ -1,8 +1,8 @@
 .tweet {
-	border: 1px solid #eee;
-	padding: 20px;
+  border: 1px solid #eee;
+  padding: 20px;
 }
 
 .tweet * {
-	font-size: 15px;
+  font-size: 15px;
 }

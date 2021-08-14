@@ -1,19 +1,19 @@
 textarea {
-	resize: none;
-	width: 100%;
-	border: none;
+  resize: none;
+  width: 100%;
+  border: none;
 }
 
 textarea:focus {
-	outline: none;
+  outline: none;
 }
 
 button {
-	background-color: #1DA1F2;
-	color: white;
-	font-size: 15px;
-	font-weight: bold;
-	border: none;
-	border-radius: 20px;
-	padding: 11px 15px;
+  background-color: #1DA1F2;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 11px 15px;
 }
