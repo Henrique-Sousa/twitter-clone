@@ -30,11 +30,11 @@ export default class Feed extends Component {
             this.setState({
               tweets: this.state.tweets.concat([tweet]),
             });
-          } catch(err) {
+          } catch (err) {
             console.log(err);
           }
         }
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     } while (tweets === undefined || user === undefined);
