@@ -17,7 +17,7 @@ export default function WhatsHappening(props) {
         body: JSON.stringify(tweet),
       });
     }
-  }
+  };
 
   return (
     <form onSubmit={submit}> 
