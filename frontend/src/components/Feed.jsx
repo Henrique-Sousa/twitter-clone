@@ -7,7 +7,7 @@ export default class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tweets: []
+      tweets: [],
     };
   }
 
@@ -28,7 +28,7 @@ export default class Feed extends Component {
             tweet.authorName = user.name;
             tweet.authorNickName = user.nickname;
             this.setState({
-              tweets: this.state.tweets.concat([tweet])
+              tweets: this.state.tweets.concat([tweet]),
             });
           } catch(err) {
             console.log(err);
@@ -48,7 +48,6 @@ export default class Feed extends Component {
         {this.state.tweets.map(tweet => 
           <Tweet key={tweet.id} authorName={tweet.authorName} authorNickName={tweet.authorNickName} text={tweet.text} />
         )}
-
       </div>
       );
   }
