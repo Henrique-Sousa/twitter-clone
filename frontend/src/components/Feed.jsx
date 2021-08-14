@@ -28,9 +28,9 @@ export default class Feed extends Component {
             user = await this.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
             tweet.authorName = user.name;
             tweet.authorNickName = user.nickname;
-            this.setState({
-              tweets: this.state.tweets.concat([tweet]),
-            });
+            this.setState((prevState) => ({
+              tweets: prevState.tweets.concat([tweet])
+            }));
           } catch (err) {
             console.log(err);
           }
