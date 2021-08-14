@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './WhatsHappening.css';
 
-const WhatsHappening = (props) => {
+const WhatsHappening = ({ apiURL }) => {
   const [author, setAuthor] = useState(-1);
   const [text, setText] = useState('');
 
@@ -11,7 +11,7 @@ const WhatsHappening = (props) => {
     const tweet = { author, text };
 
     if (tweet.text !== '' && tweet.author >= 0) {
-      await fetch(`${props.apiURL}/tweets`, {
+      await fetch(`${apiURL}/tweets`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tweet),

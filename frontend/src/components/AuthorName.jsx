@@ -1,8 +1,8 @@
 import './AuthorName.css';
 
-const AuthorName = (props) => (
+const AuthorName = ({ value }) => (
   <span className="tweet__author-name">
-    {` @${props.value}`}
+    {` @${value}`}
   </span>
 );
 

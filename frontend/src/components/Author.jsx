@@ -1,10 +1,10 @@
 import AuthorName from './AuthorName';
 import AuthorNickName from './AuthorNickName';
 
-const Author = (props) => (
+const Author = ({ nickName, name }) => (
   <p className="tweet__author-area">
-    <AuthorNickName value={props.nickName} />
-    <AuthorName value={props.name} />
+    <AuthorNickName value={nickName} />
+    <AuthorName value={name} />
   </p>
 );
 
