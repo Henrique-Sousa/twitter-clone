@@ -18,27 +18,24 @@ export default class Feed extends Component {
   }
 
   async componentDidMount() {
-    let tweets;
-    let user;
-    do {
-      try {
-        tweets = await this.fetchJSON(`${this.props.apiURL}/tweets`);
-        for (const tweet of tweets) {
-          try {
-            user = await this.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
-            tweet.authorName = user.name;
-            tweet.authorNickName = user.nickname;
-            this.setState((prevState) => ({
-              tweets: prevState.tweets.concat([tweet])
-            }));
-          } catch (err) {
-            console.log(err);
-          }
+    try {
+      const tweets = await this.constructor.fetchJSON(`${this.props.apiURL}/tweets`);
+      tweets.forEach(async (tweet) => {
+        try {
+          const user = await this.constructor.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
+          const populatedTweet = tweet;
+          populatedTweet.authorName = user.name;
+          populatedTweet.authorNickName = user.nickname;
+          this.setState((prevState) => ({
+            tweets: prevState.tweets.concat([populatedTweet]),
+          }));
+        } catch (err) {
+          console.log(err);
         }
-      } catch (err) {
-        console.log(err);
-      }
-    } while (tweets === undefined || user === undefined);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   render() {
