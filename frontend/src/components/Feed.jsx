@@ -23,7 +23,7 @@ export default class Feed extends Component {
     do {
       try {
         tweets = await this.fetchJSON(`${this.props.apiURL}/tweets`);
-        for (let tweet of tweets) {
+        for (const tweet of tweets) {
           try {
             user = await this.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
             tweet.authorName = user.name;
