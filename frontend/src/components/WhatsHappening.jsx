@@ -5,7 +5,7 @@ export default function WhatsHappening(props) {
   const [author, setAuthor] = useState(-1);
   const [text, setText] = useState('');
 
-  const submit = async event => {
+  const submit = async (event) => {
     event.preventDefault();
 
     const tweet = { author, text };
@@ -26,14 +26,14 @@ export default function WhatsHappening(props) {
         placeholder="What's happening?"
         minLength="1"
         maxLength="280"
-        onChange={e => setText(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
       />
       <div>
         <label htmlFor="author">Author</label>
         <input
           type="number"
           name="author"
-          onChange={e => setAuthor(e.target.value)}
+          onChange={(e) => setAuthor(e.target.value)}
         />
       </div>
       <button type="submit"> Tweet </button>

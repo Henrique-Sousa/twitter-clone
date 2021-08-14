@@ -45,7 +45,7 @@ export default class Feed extends Component {
       <div className="feed">
         <div><h1>Home</h1></div>
         <WhatsHappening apiURL={this.props.apiURL} />
-        {this.state.tweets.map(tweet =>
+        {this.state.tweets.map((tweet) =>
           <Tweet key={tweet.id} authorName={tweet.authorName} authorNickName={tweet.authorNickName} text={tweet.text} />
         )}
       </div>
