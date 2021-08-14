@@ -1,5 +1,7 @@
 import './AuthorNickName.css';
 
-export default function AuthorNickName(props) {
-  return <span className="tweet__author-nickname">{props.value}</span>;
-}
+const AuthorNickName = (props) => (
+  <span className="tweet__author-nickname">{props.value}</span>
+);
+
+export default AuthorNickName;

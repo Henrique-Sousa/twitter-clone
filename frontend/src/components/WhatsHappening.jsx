@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './WhatsHappening.css';
 
-export default function WhatsHappening(props) {
+const WhatsHappening = (props) => {
   const [author, setAuthor] = useState(-1);
   const [text, setText] = useState('');
 
@@ -39,4 +39,6 @@ export default function WhatsHappening(props) {
       <button type="submit"> Tweet </button>
     </form>
   );
-}
+};
+
+export default WhatsHappening;
