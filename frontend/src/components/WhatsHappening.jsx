@@ -20,7 +20,7 @@ export default function WhatsHappening(props) {
   };
 
   return (
-    <form onSubmit={submit}> 
+    <form onSubmit={submit}>
       <textarea
         name="text"
         placeholder="What's happening?"
@@ -30,7 +30,7 @@ export default function WhatsHappening(props) {
       />
       <div>
         <label htmlFor="author">Author</label>
-        <input 
+        <input
           type="number"
           name="author"
           onChange={e => setAuthor(e.target.value)}
