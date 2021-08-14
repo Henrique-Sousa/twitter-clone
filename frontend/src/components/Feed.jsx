@@ -4,17 +4,17 @@ import Tweet from './Tweet';
 import './Feed.css';
 
 export default class Feed extends Component {
+  static async fetchJSON(url) {
+    const response = await fetch(url, { mode: 'cors' });
+    const tweets = await response.json();
+    return tweets;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       tweets: [],
     };
-  }
-
-  async fetchJSON(url) {
-    const response = await fetch(url, { mode: 'cors' });
-    const tweets = await response.json();
-    return tweets;
   }
 
   async componentDidMount() {
