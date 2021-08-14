@@ -18,7 +18,8 @@ export default class Feed extends Component {
   }
 
   async componentDidMount() {
-    let tweets, user;
+    let tweets;
+    let user;
     do {
       try {
         tweets = await this.fetchJSON(`${this.props.apiURL}/tweets`);
