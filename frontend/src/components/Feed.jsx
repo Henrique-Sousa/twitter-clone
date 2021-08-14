@@ -49,6 +49,6 @@ export default class Feed extends Component {
           <Tweet key={tweet.id} authorName={tweet.authorName} authorNickName={tweet.authorNickName} text={tweet.text} />
         )}
       </div>
-      );
+    );
   }
 }
