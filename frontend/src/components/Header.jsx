@@ -1,7 +1,7 @@
 import './Header.css';
 
-export default function Header() {
-		return <header className="header" />;
-}
+const Header = () => (
+  <header className="header" />
+);
 
-
+export default Header;

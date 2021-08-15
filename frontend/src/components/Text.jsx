@@ -1,7 +1,7 @@
 import './Text.css';
 
-export default function Text(props) {
-		return <p className="tweet__text">{props.value}</p>;
-}
+const Text = ({ value }) => (
+  <p className="tweet__text">{value}</p>
+);
 
-
+export default Text;

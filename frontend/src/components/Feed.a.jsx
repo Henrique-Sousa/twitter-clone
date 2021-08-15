@@ -12,7 +12,6 @@ export default class Feed extends Component {
 
   constructor(props) {
     super(props);
-    this.apiURL = props.apiURL;
     this.state = {
       tweets: [],
     };
@@ -20,10 +19,10 @@ export default class Feed extends Component {
 
   async componentDidMount() {
     try {
-      const tweets = await this.constructor.fetchJSON(`${this.apiURL}/tweets`);
+      const tweets = await this.constructor.fetchJSON(`${this.props.apiURL}/tweets`);
       tweets.forEach(async (tweet) => {
         try {
-          const user = await this.constructor.fetchJSON(`${this.apiURL}/users/${tweet.author}`);
+          const user = await this.constructor.fetchJSON(`${this.props.apiURL}/users/${tweet.author}`);
           const populatedTweet = tweet;
           populatedTweet.authorName = user.name;
           populatedTweet.authorNickName = user.nickname;
@@ -40,12 +39,11 @@ export default class Feed extends Component {
   }
 
   render() {
-    const { tweets } = this.state;
     return (
       <div className="feed">
         <div><h1>Home</h1></div>
-        <WhatsHappening apiURL={this.apiURL} />
-        {tweets.map((tweet) => (
+        <WhatsHappening apiURL={this.props.apiURL} />
+        {this.state.tweets.map((tweet) => (
           <Tweet
             key={tweet.id}
             authorName={tweet.authorName}

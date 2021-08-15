@@ -1,11 +1,10 @@
 @import '../base.css';
 
 .feed {
-	width: 600px; 
+  width: 600px; 
 }
 
 .feed > * {
-	border: 1px solid #eee;
-	border-top: none;
+  border: 1px solid #eee;
+  border-top: none;
 }
-
