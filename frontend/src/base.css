@@ -4,3 +4,7 @@
   font-family: sans-serif;
   font-size: 20px;
 }
+
+#root {
+  display: flex;
+}
