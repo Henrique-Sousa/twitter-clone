@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './WhatsHappening.css';
 
-const WhatsHappening = ({ apiURL }) => {
+const WhatsHappening = ({ apiURL, setState }) => {
   const [author, setAuthor] = useState(-1);
   const [text, setText] = useState('');
 
@@ -17,6 +17,8 @@ const WhatsHappening = ({ apiURL }) => {
         body: JSON.stringify(tweet),
       });
     }
+    // TODO: populate tweet
+    setState(tweet);
   };
 
   return (

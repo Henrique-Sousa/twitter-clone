@@ -45,7 +45,16 @@ export default class Feed extends Component {
       <main className="feed">
         <header>
           <h1 id="home">Home</h1>
-          <WhatsHappening apiURL={this.apiURL} />
+          <WhatsHappening
+            apiURL={this.apiURL}
+            setState={
+              (tweet) => {
+                this.setState((prevState) => ({
+                  tweets: [tweet].concat(prevState.tweets),
+                }));
+              }
+            }
+          />
         </header>
         {tweets.map((tweet) => (
           <Tweet
