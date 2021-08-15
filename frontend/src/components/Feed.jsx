@@ -42,9 +42,11 @@ export default class Feed extends Component {
   render() {
     const { tweets } = this.state;
     return (
-      <div className="feed">
-        <div><h1>Home</h1></div>
-        <WhatsHappening apiURL={this.apiURL} />
+      <main className="feed">
+        <header>
+          <h1>Home</h1>
+          <WhatsHappening apiURL={this.apiURL} />
+        </header>
         {tweets.map((tweet) => (
           <Tweet
             key={tweet.id}
@@ -53,7 +55,7 @@ export default class Feed extends Component {
             text={tweet.text}
           />
         ))}
-      </div>
+      </main>
     );
   }
 }

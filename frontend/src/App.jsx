@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Feed from './components/Feed';
-import Header from './components/Header';
+import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import './App.css';
 
@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Header />
+        <Navbar />
         <Feed apiURL={this.apiURL} />
         <Sidebar />
       </div>

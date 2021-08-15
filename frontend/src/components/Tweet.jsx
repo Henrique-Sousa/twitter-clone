@@ -3,10 +3,10 @@ import Author from './Author';
 import './Tweet.css';
 
 const Tweet = ({ authorName, authorNickName, text }) => (
-  <div className="tweet">
+  <article className="tweet">
     <Author name={authorName} nickName={authorNickName} />
     <Text value={text} />
-  </div>
+  </article>
 );
 
 export default Tweet;
