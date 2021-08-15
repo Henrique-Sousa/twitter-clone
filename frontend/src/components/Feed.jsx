@@ -44,7 +44,7 @@ export default class Feed extends Component {
     return (
       <main className="feed">
         <header>
-          <h1>Home</h1>
+          <h1 id="home">Home</h1>
           <WhatsHappening apiURL={this.apiURL} />
         </header>
         {tweets.map((tweet) => (
