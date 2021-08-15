@@ -3,7 +3,7 @@ const Tweet = require('../models/tweet');
 
 exports.index = async (req, res, next) => {
   try {
-    const results = await Tweet.findAll();
+    const results = await Tweet.findAll({ order: [['date', 'DESC']] });
     res.send(results);
   } catch (e) {
     next(createError(500));
