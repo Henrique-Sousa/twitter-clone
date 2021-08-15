@@ -32,7 +32,7 @@ const WhatsHappening = ({ apiURL }) => {
         <label htmlFor="author">Author</label>
         <input
           type="number"
-          name="author"
+          id="author"
           onChange={(e) => setAuthor(e.target.value)}
         />
       </div>
