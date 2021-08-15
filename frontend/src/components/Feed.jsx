@@ -6,8 +6,8 @@ import './Feed.css';
 export default class Feed extends Component {
   static async fetchJSON(url) {
     const response = await fetch(url, { mode: 'cors' });
-    const tweets = await response.json();
-    return tweets;
+    const result = await response.json();
+    return result;
   }
 
   constructor(props) {
