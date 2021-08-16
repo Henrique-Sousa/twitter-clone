@@ -2,9 +2,14 @@ import Text from './Text';
 import Author from './Author';
 import './Tweet.css';
 
-const Tweet = ({ authorName, authorNickName, text }) => (
+const Tweet = ({
+  authorName,
+  authorNickName,
+  date,
+  text,
+}) => (
   <article className="tweet">
-    <Author name={authorName} nickName={authorNickName} />
+    <Author name={authorName} nickName={authorNickName} date={date} />
     <Text value={text} />
   </article>
 );

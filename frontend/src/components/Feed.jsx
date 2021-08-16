@@ -27,6 +27,7 @@ export default class Feed extends Component {
           const populatedTweet = tweet;
           populatedTweet.authorName = user.name;
           populatedTweet.authorNickName = user.nickname;
+          populatedTweet.date = new Date(tweet.date);
           this.setState((prevState) => ({
             tweets: prevState.tweets.concat([populatedTweet]),
           }));
@@ -61,6 +62,7 @@ export default class Feed extends Component {
             key={tweet.id}
             authorName={tweet.authorName}
             authorNickName={tweet.authorNickName}
+            date={tweet.date}
             text={tweet.text}
           />
         ))}
