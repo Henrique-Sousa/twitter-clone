@@ -1,7 +1,7 @@
 const express = require('express');
 const createError = require('http-errors');
-const usersRouter = require('./routes/users');
-const tweetsRouter = require('./routes/tweets');
+const usersRouter = require('./src/routes/users');
+const tweetsRouter = require('./src/routes/tweets');
 
 const app = express();
 
