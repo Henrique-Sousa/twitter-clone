@@ -10,7 +10,7 @@ const Author = ({ nickName, name, date }) => {
     <p className="tweet__author-area">
       <AuthorNickName value={nickName} />
       <AuthorName value={name} />
-      <span>{` ${dateDisplayed}`}</span>
+      <span style={{ color: 'rgb(83, 100, 113)' }}>{` · ${dateDisplayed}`}</span>
     </p>
   );
 };
