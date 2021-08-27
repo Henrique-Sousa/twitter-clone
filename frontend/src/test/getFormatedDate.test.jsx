@@ -1,17 +1,23 @@
 import getFormatedDate from '../lib/getFormatedDate';
 
-test('seconds', () => {
-  expect(getFormatedDate(
-    new Date(Date.now() - 30000),
-    new Date(Date.now()),
-  ))
-    .toBe('30s');
-});
+describe('test formated date', () => {
+  const baseTime = 1600 * (10 ** 9);
+  const baseDate = new Date(baseTime);
+  const getDateBefore = (time) => new Date(baseTime - time);
 
-test('minutes', () => {
-  expect(getFormatedDate(
-    new Date(Date.now() - 70000),
-    new Date(Date.now()),
-  ))
-    .toBe('1m');
+  test('seconds', () => {
+    expect(getFormatedDate(
+      getDateBefore(30 * 1000),
+      baseDate,
+    ))
+      .toBe('30s');
+  });
+
+  test('minutes', () => {
+    expect(getFormatedDate(
+      getDateBefore(70 * 1000),
+      baseDate,
+    ))
+      .toBe('1m');
+  });
 });
