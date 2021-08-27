@@ -17,7 +17,6 @@ const WhatsHappening = ({ apiURL, setState }) => {
         body: JSON.stringify(tweet),
       });
     }
-    // TODO: populate tweet
     setState(tweet);
   };
 
