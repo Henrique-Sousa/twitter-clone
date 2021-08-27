@@ -9,12 +9,16 @@ const getFormatedDate = (tweetDate, currentDate) => {
   const delta = (currentDate.getTime() - tweetDate.getTime()) / 1000;
   const m = 60;
   const h = 60 * m;
+  const d = 24 * h;
 
   if (delta < m) {
     return `${Math.floor(delta)}s`;
   }
   if (delta < h) {
     return `${Math.floor(delta / m)}m`;
+  }
+  if (delta < d) {
+    return `${Math.floor(delta / h)}h`;
   }
   return '';
 };
