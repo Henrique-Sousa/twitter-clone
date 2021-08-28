@@ -10,6 +10,10 @@ const getFormatedDate = (tweetDate, currentDate) => {
   const m = 60;
   const h = 60 * m;
   const d = 24 * h;
+  const tweetYear = tweetDate.getFullYear();
+  const currentYear = currentDate.getFullYear();
+  const tweetMonth = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(tweetDate);
+  const tweetDay = tweetDate.getDate();
 
   if (delta < m) {
     return `${Math.floor(delta)}s`;
@@ -19,6 +23,9 @@ const getFormatedDate = (tweetDate, currentDate) => {
   }
   if (delta < d) {
     return `${Math.floor(delta / h)}h`;
+  }
+  if (tweetYear === currentYear) {
+    return `${tweetMonth} ${tweetDay}`;
   }
   return '';
 };
