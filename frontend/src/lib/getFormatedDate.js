@@ -27,7 +27,7 @@ const getFormatedDate = (tweetDate, currentDate) => {
   if (tweetYear === currentYear) {
     return `${tweetMonth} ${tweetDay}`;
   }
-  return '';
+  return `${tweetMonth} ${tweetDay}, ${tweetYear}`;
 };
 
 export default getFormatedDate;
