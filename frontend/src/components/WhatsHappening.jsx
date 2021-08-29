@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Toolbar from './Toolbar';
+import Photo from './Photo';
 import './WhatsHappening.css';
 
 const WhatsHappening = ({ apiURL, setState }) => {
@@ -21,24 +23,30 @@ const WhatsHappening = ({ apiURL, setState }) => {
   };
 
   return (
-    <form onSubmit={submit}>
-      <textarea
-        name="text"
-        placeholder="What's happening?"
-        minLength="1"
-        maxLength="280"
-        onChange={(e) => setText(e.target.value)}
-      />
-      <div>
-        <label htmlFor="author">Author</label>
-        <input
-          type="number"
-          id="author"
-          onChange={(e) => setAuthor(e.target.value)}
+    <div className="whats-happening">
+      <Photo />
+      <form onSubmit={submit}>
+        <textarea
+          name="text"
+          placeholder="What's happening?"
+          minLength="1"
+          maxLength="280"
+          onChange={(e) => setText(e.target.value)}
         />
-      </div>
-      <button type="submit"> Tweet </button>
-    </form>
+        <div>
+          <label htmlFor="author">Author</label>
+          <input
+            type="number"
+            id="author"
+            onChange={(e) => setAuthor(e.target.value)}
+          />
+        </div>
+        <div>
+          <Toolbar />
+          <button type="submit"> Tweet </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

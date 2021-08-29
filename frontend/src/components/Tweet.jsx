@@ -1,5 +1,6 @@
 import Text from './Text';
 import Author from './Author';
+import Photo from './Photo';
 import './Tweet.css';
 
 const Tweet = ({
@@ -9,8 +10,11 @@ const Tweet = ({
   text,
 }) => (
   <article className="tweet">
-    <Author name={authorName} nickName={authorNickName} date={date} />
-    <Text value={text} />
+    <Photo />
+    <div>
+      <Author name={authorName} nickName={authorNickName} date={date} />
+      <Text value={text} />
+    </div>
   </article>
 );
 

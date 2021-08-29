@@ -1,7 +1,34 @@
+.whats-happening {
+  display: flex;
+}
+
+.whats-happening .user__photo {
+  margin-left: 17px;
+  margin-top: 7px;
+}
+
+.whats-happening form {
+  width: 100%;
+  margin-right: 15px;
+}
+  
+.whats-happening form div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.whats-happening .tool-bar svg {
+  height: 20px;
+  fill: rgb(29, 155, 240);
+  margin-right: 15px;
+}
+
 textarea {
   resize: none;
   width: 100%;
   border: none;
+  margin-top: 20px;
 }
 
 textarea:focus {
@@ -15,5 +42,6 @@ button {
   font-weight: bold;
   border: none;
   border-radius: 20px;
-  padding: 11px 15px;
+  padding: 9px 15px;
+  margin: 7px;
 }

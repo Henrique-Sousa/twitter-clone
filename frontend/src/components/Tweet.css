@@ -1,5 +1,6 @@
 .tweet {
   padding: 20px;
+  display: flex;
 }
 
 .tweet * {
