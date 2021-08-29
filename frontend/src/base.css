@@ -5,6 +5,7 @@
   font-size: 20px;
 }
 
-#root {
-  display: flex;
+:root {
+  --navbar-width: 318px;
+  --primary-color: rgb(29, 155, 240);
 }

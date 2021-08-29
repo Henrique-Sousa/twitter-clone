@@ -1,3 +1,12 @@
 .navbar {
-  width: 318px;
+  width: var(--navbar-width);
+  position: fixed;
+}
+
+.navbar div {
+  margin-left: 35px;
+}
+
+.twitter__logo svg {
+  height: 30px;
 }

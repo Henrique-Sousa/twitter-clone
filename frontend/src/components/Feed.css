@@ -6,6 +6,7 @@
 
 .feed {
   width: 600px; 
+  margin-left: var(--navbar-width);
 }
 
 .feed > * {
@@ -21,5 +22,4 @@ header {
 
 #home {
   padding: 15px;
-  border-bottom: var(--border); 
 }
