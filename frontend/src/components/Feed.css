@@ -1,14 +1,25 @@
 @import '../base.css';
 
+:root {
+  --border: 1px solid #eee;
+}
+
 .feed {
   width: 600px; 
 }
 
 .feed > * {
-  border: 1px solid #eee;
+  border: var(--border);
   border-top: none;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  background-color: white;
 }
 
 #home {
   padding: 15px;
+  border-bottom: var(--border); 
 }
