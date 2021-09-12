@@ -14,7 +14,7 @@ const sequelize = new Sequelize({
   host: connection.host,
   port: connection.port,
   password: connection.password,
-  dialect: 'mysql',
+  dialect: connection.dialect,
   operatorsAliases: false,
 });
 
