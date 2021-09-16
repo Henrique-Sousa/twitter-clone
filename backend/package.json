@@ -4,6 +4,7 @@
   "description": "twitter clone",
   "main": "app.js",
   "scripts": {
+    "start": "if [ \"$NODE_ENV\" = \"dev\" ]; then nodemon app.js; else node app.js; fi",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"**/*.js\" --ignore-pattern node_modules/"
   },
