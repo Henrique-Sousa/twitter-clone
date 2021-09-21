@@ -1,8 +1,9 @@
-FROM node:alpine  
-WORKDIR /app
+FROM node:alpine
+WORKDIR /usr/src/app
 COPY package*.json ./
-ENV NODE_ENV production
 RUN npm install
 COPY . .
+RUN npm run build
 EXPOSE 3000
+ENV NODE_ENV production
 CMD ["npm", "start"]

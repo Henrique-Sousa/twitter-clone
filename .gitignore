@@ -3,3 +3,4 @@ node_modules
 connection.json
 docker-data
 .env
+build
