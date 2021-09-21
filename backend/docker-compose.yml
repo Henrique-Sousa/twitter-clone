@@ -3,17 +3,12 @@ volumes:
   node_modules:
 services:
   app:
-    build:
-      context: .
-      args:
-        NODE_ENV: ${NODE_ENV}
+    build: .
     ports:
       - 3001:3000
     volumes:
       - .:/app
       - node_modules:/app/node_modules
-    environment:
-      NODE_ENV: ${NODE_ENV}
     depends_on:
       - db
   db:
