@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const createError = require('http-errors');
 
-const connection = require('./connection.json');
+const connection = require('./connection');
 
 const DISABLE_SEQUELIZE_DEFAULTS = {
   timestamps: false,
