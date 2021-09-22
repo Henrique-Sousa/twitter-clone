@@ -1,6 +1,5 @@
 node_modules
 *.swp
-connection.json
 docker-data
 .env
 build
