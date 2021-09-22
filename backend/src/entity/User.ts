@@ -10,9 +10,4 @@ export default class User {
 
   @Column()
   nickname!: string;
-
-  constructor(id: number, name: string, nickname: string) {
-    this.name = name;
-    this.nickname = nickname;
-  }
 }
