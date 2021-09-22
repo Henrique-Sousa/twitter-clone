@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { createConnection, ConnectionOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 import User from './src/entity/User';
+import Tweet from './src/entity/Tweet';
 
 const main = async () => {
   dotenv.config();
@@ -14,7 +15,7 @@ const main = async () => {
     database: process.env.POSTGRES_DB,
     synchronize: true,
     logging: false,
-    entities: [User],
+    entities: [User, Tweet],
   };
   const connection = await createConnection(options);
 };

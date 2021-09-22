@@ -2,25 +2,22 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
   CreateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
 } from 'typeorm';
-import Tweet from './Tweet';
+import User from './User';
 
 @Entity()
-export default class User {
+export default class Tweet {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
-  name!: string;
+  @ManyToOne(() => User, (user) => user.tweets)
+  author!: User;
 
-  @Column()
-  nickname!: string;
-
-  @OneToMany(() => Tweet, (tweet) => tweet.author)
-  tweets!: Tweet[];
+  @Column({ type: 'varchar', length: 280 })
+  text!: string;
 
   @CreateDateColumn()
   createdAt!: Date;
