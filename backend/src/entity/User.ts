@@ -17,7 +17,7 @@ export default class User {
   name!: string;
 
   @Column()
-  nickname!: string;
+  username!: string;
 
   @OneToMany(() => Tweet, (tweet) => tweet.author)
   tweets!: Tweet[];
