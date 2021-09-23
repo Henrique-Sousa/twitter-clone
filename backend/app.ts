@@ -1,23 +1,13 @@
 import 'reflect-metadata';
-import { createConnection, ConnectionOptions } from 'typeorm';
-import * as dotenv from 'dotenv';
-import User from './src/entity/User';
-import Tweet from './src/entity/Tweet';
+import express from 'express';
+import usersRouter from './src/routes/users';
+import connection from './src/database';
 
 const main = async () => {
-  dotenv.config();
-  const options: ConnectionOptions = {
-    type: 'postgres',
-    port: 5432,
-    host: process.env.NODE_ENV === 'production' ? process.env.POSTGRES_HOST : 'localhost',
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-    synchronize: true,
-    logging: false,
-    entities: [User, Tweet],
-  };
-  const connection = await createConnection(options);
+  const app = express();
+  app.locals.connection = await connection;
+  app.use('/users', usersRouter);
+  app.listen(3000);
 };
 
 main().catch((error) => console.error(error));
