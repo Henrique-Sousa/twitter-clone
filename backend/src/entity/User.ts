@@ -19,7 +19,7 @@ export default class User {
   @Column()
   username!: string;
 
-  @OneToMany(() => Tweet, (tweet) => tweet.author)
+  @OneToMany(() => Tweet, (tweet) => tweet.user)
   tweets!: Tweet[];
 
   @CreateDateColumn()

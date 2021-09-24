@@ -14,7 +14,7 @@ export default class Tweet {
   id!: number;
 
   @ManyToOne(() => User, (user) => user.tweets)
-  author!: User;
+  user!: User;
 
   @Column({ type: 'varchar', length: 280 })
   text!: string;
