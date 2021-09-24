@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import User from '../entity/User';
 import Tweet from '../entity/Tweet';
-import users from '../routes/users';
+import usersRouter from '../routes/users';
 
 beforeEach(() => {
   const options: ConnectionOptions = {
@@ -30,7 +30,7 @@ afterEach(() => {
 
 const app = express();
 
-app.use('/', users);
+app.use('/users', usersRouter);
 
 test('users route', async () => {
   const userRepository = getRepository(User);
@@ -43,7 +43,7 @@ test('users route', async () => {
     username: 'justinbieber',
   });
   const result = await request(app)
-    .get('/')
+    .get('/users')
     .expect('Content-Type', /json/)
     .expect(200);
   expect(result.body[0].id).toBe(1);
