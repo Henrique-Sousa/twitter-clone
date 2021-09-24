@@ -32,14 +32,19 @@ const app = express();
 
 app.use('/', tweets);
 
-// interface TweetResult {
-//   id: number;
-//   text: string;
-//   createdAt: string;
-//   deletedAt?: string;
-//   user: User;
-// }
-type TweetResult = Tweet & User;
+interface TweetResult {
+  id: number;
+  text: string;
+  createdAt: string;
+  deletedAt?: string | null;
+  user: {
+    id: number;
+    name: string
+    username: string;
+    createdAt: string;
+    deletedAt: string | null;
+  };
+}
 
 test('tweets route', async () => {
   const userRepository = getRepository(User);
