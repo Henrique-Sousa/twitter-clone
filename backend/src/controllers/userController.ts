@@ -14,4 +14,4 @@ const show = async (req: Request, res: Response): Promise<void> => {
   res.send(user);
 };
 
-export { index, show };
+export default { index, show };

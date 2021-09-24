@@ -63,9 +63,9 @@ const index = async (req: Request, res: Response, next: NextFunction): Promise<v
 //   }
 // };
 
-export {
+export default {
   index,
-//  create,
+//   create,
 //   show,
 //   update,
 //   destroy,
