@@ -33,11 +33,12 @@ const app = express();
 app.use('/', users);
 
 test('users route', async () => {
-  await getRepository(User).insert({
+  const userRepository = getRepository(User);
+  await userRepository.insert({
     name: 'Barack Obama',
     username: 'BarackObama',
   });
-  await getRepository(User).insert({
+  await userRepository.insert({
     name: 'Justin Bieber',
     username: 'justinbieber',
   });
