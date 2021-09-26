@@ -20,11 +20,11 @@ export default class User {
   username!: string;
 
   @OneToMany(() => Tweet, (tweet) => tweet.user)
-  tweets!: Tweet[];
+  tweets?: Tweet[];
 
   @CreateDateColumn()
   createdAt!: Date;
 
   @DeleteDateColumn()
-  deletedAt!: Date;
+  deletedAt?: Date;
 }

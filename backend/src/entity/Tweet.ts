@@ -23,5 +23,5 @@ export default class Tweet {
   createdAt!: Date;
 
   @DeleteDateColumn()
-  deletedAt!: Date;
+  deletedAt?: Date;
 }
