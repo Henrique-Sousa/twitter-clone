@@ -46,16 +46,16 @@ interface TweetResult {
   };
 }
 
-test('tweets route', async () => {
+test('GET tweets route', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
-  const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';
-  const text2 = 'If hat(theta) is a the MLE of theta, f(hat(theta)) is the MLE of f(theta) for any function f.';
-  await userRepository.insert({
+  const user = {
     name: 'Data Science Fact',
     username: 'DataSciFact',
-  });
-  const user = await userRepository.findOne(1);
+  };
+  const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';
+  const text2 = 'If hat(theta) is a the MLE of theta, f(hat(theta)) is the MLE of f(theta) for any function f.';
+  await userRepository.insert(user);
   await tweetRepository.insert({
     user,
     text: text1,
