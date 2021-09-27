@@ -28,6 +28,20 @@ afterEach(() => {
   return conn.close();
 });
 
+const user1 = {
+  name: 'Data Science Fact',
+  username: 'DataSciFact',
+};
+
+const user2 = {
+  name: 'jack',
+  username: 'jack',
+};
+
+const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';
+const text2 = 'If hat(theta) is a the MLE of theta, f(hat(theta)) is the MLE of f(theta) for any function f.';
+const text3 = 'just setting up my twttr';
+
 const app = express();
 
 app.use('/', tweets);
@@ -49,19 +63,13 @@ interface TweetResult {
 test('GET tweets route', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
-  const user = {
-    name: 'Data Science Fact',
-    username: 'DataSciFact',
-  };
-  const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';
-  const text2 = 'If hat(theta) is a the MLE of theta, f(hat(theta)) is the MLE of f(theta) for any function f.';
-  await userRepository.insert(user);
+  await userRepository.insert(user1);
   await tweetRepository.insert({
-    user,
+    user: user1,
     text: text1,
   });
   await tweetRepository.insert({
-    user,
+    user: user1,
     text: text2,
   });
   const result = await request(app)
@@ -81,13 +89,8 @@ test('GET tweets route', async () => {
 test('GET tweets/:id route', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
-  const user = {
-    name: 'jack',
-    username: 'jack',
-  };
-  const text = 'just setting up my twttr';
-  await userRepository.insert(user);
-  await tweetRepository.insert({ user, text });
+  await userRepository.insert(user2);
+  await tweetRepository.insert({ user: user2, text: text3 });
   const result = await request(app)
     .get('/1')
     .expect('Content-Type', /json/)
@@ -95,5 +98,5 @@ test('GET tweets/:id route', async () => {
   expect(result.body.id).toBe(1);
   expect(result.body.user.name).toBe('jack');
   expect(result.body.user.username).toBe('jack');
-  expect(result.body.text).toBe(text);
+  expect(result.body.text).toBe(text3);
 });
