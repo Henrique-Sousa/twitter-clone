@@ -77,3 +77,23 @@ test('GET tweets route', async () => {
   expect(element1.text).toBe(text1);
   expect(element2.text).toBe(text2);
 });
+
+test('GET tweets/:id route', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  const user = {
+    name: 'jack',
+    username: 'jack',
+  };
+  const text = 'just setting up my twttr';
+  await userRepository.insert(user);
+  await tweetRepository.insert({ user, text });
+  const result = await request(app)
+    .get('/1')
+    .expect('Content-Type', /json/)
+    .expect(200);
+  expect(result.body.id).toBe(1);
+  expect(result.body.user.name).toBe('jack');
+  expect(result.body.user.username).toBe('jack');
+  expect(result.body.text).toBe(text);
+});
