@@ -3,3 +3,4 @@ node_modules
 docker-data
 .env
 build
+.docker_temp*
