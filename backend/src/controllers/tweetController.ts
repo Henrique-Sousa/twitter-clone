@@ -24,7 +24,15 @@ const show = async (req: Request, res: Response, next: NextFunction): Promise<vo
     const tweet = await tweetRepository.findOne(req.params.tweet_id, {
       relations: ['user'],
     });
-    res.send(tweet);
+    if (tweet) {
+      res.send(tweet);
+    } else {
+      res.send({
+        error: 'Not Found',
+        resource: 'tweet',
+        id: req.params.tweet_id,
+      });
+    }
   } catch (e) {
     next(createError(500));
   }
