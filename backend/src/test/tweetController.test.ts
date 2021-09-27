@@ -138,7 +138,7 @@ test('GET tweets/:id deleted', async () => {
     text: text1,
     deletedAt: new Date(Date.now()),
   });
-  const result = await request(app)
+  await request(app)
     .get('/1')
     .expect(200)
     .expect('{"error":"Not Found","resource":"tweet","id":"1"}');
