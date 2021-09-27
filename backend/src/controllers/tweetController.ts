@@ -18,6 +18,18 @@ const index = async (req: Request, res: Response, next: NextFunction): Promise<v
   }
 };
 
+const show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const tweetRepository = getRepository(Tweet);
+    const tweet = await tweetRepository.findOne(req.params.tweet_id, {
+      relations: ['user'],
+    });
+    res.send(tweet);
+  } catch (e) {
+    next(createError(500));
+  }
+};
+
 // const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 //   try {
 //     const tweet = await Tweet.create({
@@ -26,27 +38,6 @@ const index = async (req: Request, res: Response, next: NextFunction): Promise<v
 //       text: req.body.text,
 //     });
 //     res.send(tweet);
-//   } catch (e) {
-//     next(createError(500));
-//   }
-// };
-//
-// const show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   try {
-//     const result = await Tweet.findByPk(req.params.tweet_id);
-//     res.send(result);
-//   } catch (e) {
-//     next(createError(500));
-//   }
-// };
-//
-// const update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   try {
-//     const result = await Tweet.update(
-//       { text: req.body.text },
-//       { where: { id: req.params.tweet_id } },
-//     );
-//     res.send(result);
 //   } catch (e) {
 //     next(createError(500));
 //   }
@@ -65,8 +56,8 @@ const index = async (req: Request, res: Response, next: NextFunction): Promise<v
 
 export default {
   index,
+  show,
 //   create,
-//   show,
 //   update,
 //   destroy,
 };
