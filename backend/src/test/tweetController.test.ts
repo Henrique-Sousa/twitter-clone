@@ -60,7 +60,7 @@ interface TweetResult {
   };
 }
 
-test('GET tweets route', async () => {
+test('GET tweets', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
   await userRepository.insert(user1);
@@ -86,11 +86,39 @@ test('GET tweets route', async () => {
   expect(element2.text).toBe(text2);
 });
 
-test('GET tweets/:id route', async () => {
+test('GET tweets with a (soft) deleted entry', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
+  await tweetRepository.insert({
+    user: user1,
+    text: text1,
+  });
+  await tweetRepository.insert({
+    user: user1,
+    text: text2,
+    deletedAt: new Date(Date.now()),
+  });
+  await tweetRepository.insert({
+    user: user2,
+    text: text3,
+  });
+  const result = await request(app)
+    .get('/')
+    .expect('Content-Type', /json/)
+    .expect(200);
+  expect(result.body.length).toBe(2);
+});
+
+test('GET tweets/:id', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
   await userRepository.insert(user2);
-  await tweetRepository.insert({ user: user2, text: text3 });
+  await tweetRepository.insert({
+    user: user2,
+    text: text3,
+  });
   const result = await request(app)
     .get('/1')
     .expect('Content-Type', /json/)
@@ -99,4 +127,19 @@ test('GET tweets/:id route', async () => {
   expect(result.body.user.name).toBe('jack');
   expect(result.body.user.username).toBe('jack');
   expect(result.body.text).toBe(text3);
+});
+
+test('GET tweets/:id deleted', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1);
+  await tweetRepository.insert({
+    user: user1,
+    text: text1,
+    deletedAt: new Date(Date.now()),
+  });
+  const result = await request(app)
+    .get('/1')
+    .expect(200)
+    .expect('');
 });
