@@ -25,6 +25,6 @@ export default class User {
   @CreateDateColumn()
   createdAt!: Date;
 
-  @DeleteDateColumn()
+  @DeleteDateColumn({ select: false })
   deletedAt?: Date;
 }
