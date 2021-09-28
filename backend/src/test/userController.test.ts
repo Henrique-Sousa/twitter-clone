@@ -19,20 +19,30 @@ afterEach(() => {
   return conn.close();
 });
 
+const user1 = {
+  name: 'Barack Obama',
+  username: 'BarackObama',
+};
+
+const user2 = {
+  name: 'Justin Bieber',
+  username: 'justinbieber',
+};
+
+const user3 = {
+  name: 'jack',
+  username: 'jack',
+  deletedAt: new Date(Date.now()),
+};
+
 const app = express();
 
 app.use('/users', usersRouter);
 
-test('users route', async () => {
+test('GET users', async () => {
   const userRepository = getRepository(User);
-  await userRepository.insert({
-    name: 'Barack Obama',
-    username: 'BarackObama',
-  });
-  await userRepository.insert({
-    name: 'Justin Bieber',
-    username: 'justinbieber',
-  });
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
   const result = await request(app)
     .get('/users')
     .expect('Content-Type', /json/)
@@ -43,4 +53,16 @@ test('users route', async () => {
   expect(result.body[1].name).toBe('Justin Bieber');
   expect(result.body[0].username).toBe('BarackObama');
   expect(result.body[1].username).toBe('justinbieber');
+});
+
+test('GET users with a (soft) deleted entry', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
+  await userRepository.insert(user3);
+  const result = await request(app)
+    .get('/users')
+    .expect('Content-Type', /json/)
+    .expect(200);
+  expect(result.body.length).toBe(2);
 });
