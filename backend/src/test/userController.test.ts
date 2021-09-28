@@ -2,26 +2,17 @@ import 'reflect-metadata';
 import request from 'supertest';
 import express from 'express';
 import {
-  ConnectionOptions,
   createConnection,
   getConnection,
   getRepository,
 } from 'typeorm';
 import User from '../entity/User';
-import Tweet from '../entity/Tweet';
 import usersRouter from '../routes/users';
+import options from '../mock-database';
 
-beforeEach(() => {
-  const options: ConnectionOptions = {
-    type: 'sqlite',
-    database: ':memory:',
-    dropSchema: true,
-    entities: [User, Tweet],
-    synchronize: true,
-    logging: false,
-  };
-  return createConnection(options);
-});
+beforeEach(() => (
+  createConnection(options)
+));
 
 afterEach(() => {
   const conn = getConnection();
