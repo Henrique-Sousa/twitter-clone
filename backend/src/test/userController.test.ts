@@ -66,3 +66,25 @@ test('GET users with a (soft) deleted entry', async () => {
     .expect(200);
   expect(result.body.length).toBe(2);
 });
+
+test('GET users/:id', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  const result = await request(app)
+    .get('/users/1')
+    .expect('Content-Type', /json/)
+    .expect(200);
+  expect(result.body.id).toBe(1);
+  expect(result.body.name).toBe('Barack Obama');
+  expect(result.body.username).toBe('BarackObama');
+});
+
+test('GET users/:id deleted', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user3);
+  const result = await request(app)
+    .get('/users/1')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .expect('{"error":"Not Found","resource":"user","id":"1"}');
+});
