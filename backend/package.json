@@ -7,7 +7,7 @@
     "start": "node build/app.js",
     "dev": "ts-node-dev app.ts",
     "build": "tsc",
-    "clean": "rm build/ -rf",
+    "clean": "tsc -b . --clean",
     "test": "jest",
     "lint": "eslint \"**/*.{js,ts}\""
   },
