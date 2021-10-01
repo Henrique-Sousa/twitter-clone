@@ -22,4 +22,4 @@ services:
     ports:
       - 8001:5432
     volumes:
-      - ./docker-data/db-data:/var/lib/postgresql/data
+      - ../docker-data/db-data:/var/lib/postgresql/data
