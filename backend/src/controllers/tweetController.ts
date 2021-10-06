@@ -2,6 +2,7 @@ import createError from 'http-errors';
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Tweet from '../entity/Tweet';
+import User from '../entity/User';
 
 const index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -41,19 +42,28 @@ const show = async (req: Request, res: Response, next: NextFunction): Promise<vo
   }
 };
 
-// const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   try {
-//     const tweet = await Tweet.create({
-//       author: req.body.author,
-//       date: Date.now(),
-//       text: req.body.text,
-//     });
-//     res.send(tweet);
-//   } catch (e) {
-//     next(createError(500));
-//   }
-// };
-//
+const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  const user = await userRepository.findOne({
+    where: { id: req.body.authorId },
+  });
+
+  if (user) {
+    const currentUser = {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      createdAt: user.createdAt,
+    };
+    const tweetToSend = {
+      user: currentUser,
+      text: req.body.text,
+    };
+    await tweetRepository.insert(tweetToSend);
+  }
+};
+
 // const destroy = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 //   try {
 //     await Tweet.destroy({
@@ -68,7 +78,6 @@ const show = async (req: Request, res: Response, next: NextFunction): Promise<vo
 export default {
   index,
   show,
-//   create,
-//   update,
+  create,
 //   destroy,
 };

@@ -3,16 +3,23 @@ import Author from './Author';
 import Photo from './Photo';
 import './Tweet.css';
 
-const Tweet = ({
-  authorName,
-  authorNickName,
+interface Props {
+  name: string;
+  username: string;
+  date: Date;
+  text: string;
+}
+
+const Tweet: React.FC<Props> = ({
+  name,
+  username,
   date,
   text,
 }) => (
   <article className="tweet">
     <Photo />
     <div>
-      <Author name={authorName} nickName={authorNickName} date={date} />
+      <Author name={name} username={username} date={date} />
       <Text value={text} />
     </div>
   </article>

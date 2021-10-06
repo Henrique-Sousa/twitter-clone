@@ -5,7 +5,7 @@
   "description": "twitter clone",
   "main": "app.js",
   "scripts": {
-    "start": "node build/app.js",
+    "start": "node build/backend/app.js",
     "dev": "ts-node-dev app.ts",
     "build": "tsc",
     "clean": "tsc -b . --clean",

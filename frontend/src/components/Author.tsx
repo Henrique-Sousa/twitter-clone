@@ -1,22 +1,32 @@
 import { Component } from 'react';
 import AuthorName from './AuthorName';
-import AuthorNickName from './AuthorNickName';
+import AuthorUsername from './AuthorUsername';
 import getFormatedDate from '../lib/getFormatedDate';
 
-export default class Author extends Component {
-  constructor(props) {
+interface Props {
+  name: string;
+  username: string;
+  date: Date;
+}
+
+export default class Author extends Component<Props> {
+  name: string;
+  username: string;
+  dateDisplayed: string;
+
+  constructor(props: Props) {
     super(props);
-    this.nickName = props.nickName;
     this.name = props.name;
+    this.username = props.username;
     this.dateDisplayed = getFormatedDate(props.date, new Date(Date.now()));
   }
 
   render() {
-    const { nickName, name } = this.props;
+    const { name, username } = this.props;
     return (
       <p className="tweet__author-area">
-        <AuthorNickName value={nickName} />
         <AuthorName value={name} />
+        <AuthorUsername value={username} />
         <span style={{ color: 'rgb(83, 100, 113)' }}>{` · ${this.dateDisplayed}`}</span>
       </p>
     );
