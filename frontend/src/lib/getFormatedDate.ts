@@ -5,7 +5,7 @@
 // if tweet hour is current hour but tweet minute is not current minute, show minutes passed: 9m
 // if tweet minute is current minute, show seconds passed
 
-const getFormatedDate = (tweetDate, currentDate) => {
+const getFormatedDate = (tweetDate: Date, currentDate: Date): string => {
   const delta = (currentDate.getTime() - tweetDate.getTime()) / 1000;
   const m = 60;
   const h = 60 * m;

@@ -2,46 +2,35 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
+    "@types/react": "^17.0.27",
+    "@types/react-dom": "^17.0.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "typescript-eslint-parser": "^22.0.0"
   },
   "jest": {
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/src/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/src/__mocks__/fileMock.js"
-    }
-  },
-  "eslintConfig": {
-    "env": {
-      "jest": true
-    },
-    "extends": [
-      "airbnb"
-    ],
-    "rules": {
-      "jsx-a11y/label-has-associated-control": "off",
-      "react/prop-types": "off",
-      "react/react-in-jsx-scope": "off",
-      "react/jsx-filename-extension": [
-        1,
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ]
     }
   },
   "browserslist": {
@@ -55,9 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "eslint-config-airbnb": "^18.2.1"
   }
 }

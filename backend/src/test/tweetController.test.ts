@@ -10,6 +10,7 @@ import User from '../entity/User';
 import Tweet from '../entity/Tweet';
 import tweets from '../routes/tweets';
 import options from '../mock-database';
+import { TweetResult } from '../../../shared/ApiResults';
 
 beforeEach(() => (
   createConnection(options)
@@ -37,20 +38,6 @@ const text3 = 'just setting up my twttr';
 const app = express();
 
 app.use('/', tweets);
-
-interface TweetResult {
-  id: number;
-  text: string;
-  createdAt: string;
-  deletedAt?: string | null;
-  user: {
-    id: number;
-    name: string
-    username: string;
-    createdAt: string;
-    deletedAt: string | null;
-  };
-}
 
 test('GET tweets', async () => {
   const userRepository = getRepository(User);

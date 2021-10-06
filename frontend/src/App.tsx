@@ -4,8 +4,11 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 
 class App extends Component {
-  constructor() {
-    super();
+
+  apiURL: string;
+
+  constructor(props: {}) {
+    super(props);
     this.apiURL = 'http://127.0.0.1:3001';
   }
 

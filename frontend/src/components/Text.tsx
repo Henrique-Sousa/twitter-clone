@@ -1,6 +1,6 @@
 import './Text.css';
 
-const Text = ({ value }) => (
+const Text: React.FC<{ value: string }> = ({ value }) => (
   <p className="tweet__text">{value}</p>
 );
 
