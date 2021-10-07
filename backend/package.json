@@ -11,7 +11,8 @@
     "clean": "tsc -b . --clean",
     "test": "jest",
     "lint": "eslint \"**/*.{js,ts}\"",
-    "seed": "ts-node-dev db/seed.ts"
+    "seed": "ts-node-dev db/seed.ts",
+    "drop": "ts-node-dev db/drop.ts"
   },
   "author": "",
   "license": "ISC",
