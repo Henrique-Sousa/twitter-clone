@@ -61,6 +61,7 @@ const create = async (req: Request, res: Response, next: NextFunction): Promise<
       text: req.body.text,
     };
     await tweetRepository.insert(tweetToSend);
+    res.end();
   }
 };
 
