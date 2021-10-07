@@ -1,11 +1,4 @@
-import { createConnection, ConnectionOptions } from 'typeorm';
-import * as dotenv from 'dotenv';
-import User from './entity/User';
-import Tweet from './entity/Tweet';
-
-dotenv.config();
-
-const options: ConnectionOptions = {
+module.exports = {
   type: 'postgres',
   port: 5432,
   host: process.env.NODE_ENV === 'production' ? process.env.POSTGRES_HOST : 'localhost',
@@ -14,7 +7,5 @@ const options: ConnectionOptions = {
   database: process.env.POSTGRES_DB,
   synchronize: true,
   logging: false,
-  entities: [User, Tweet],
+  entities: ['build/backend/src/entity/**/*.js'],
 };
-
-createConnection(options);

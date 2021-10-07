@@ -7,7 +7,6 @@ import {
 import * as dotenv from 'dotenv';
 import User from './src/entity/User';
 import Tweet from './src/entity/Tweet';
-import './src/database';
 
 dotenv.config();
 
