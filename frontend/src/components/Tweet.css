@@ -6,3 +6,8 @@
 .tweet * {
   font-size: 15px;
 }
+
+.tweet:hover {
+  background-color: rgb(245, 245, 245);
+  cursor: pointer;
+}
