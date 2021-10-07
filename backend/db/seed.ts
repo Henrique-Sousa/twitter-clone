@@ -5,10 +5,10 @@ import {
   getRepository,
 } from 'typeorm';
 import * as dotenv from 'dotenv';
-import User from './src/entity/User';
-import Tweet from './src/entity/Tweet';
+import User from '../src/entity/User';
+import Tweet from '../src/entity/Tweet';
 
-dotenv.config();
+dotenv.config({ path: `${__dirname}/../.env` });
 
 const options: ConnectionOptions = {
   type: 'postgres',

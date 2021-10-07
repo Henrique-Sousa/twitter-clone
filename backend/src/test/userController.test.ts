@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import User from '../entity/User';
 import usersRouter from '../routes/users';
-import options from '../mock-database';
+import options from './mock-database';
 
 beforeEach(() => (
   createConnection(options)

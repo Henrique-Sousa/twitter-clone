@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import express from 'express';
 import createError from 'http-errors';
 import { createConnection } from 'typeorm';
-import usersRouter from './src/routes/users';
-import tweetsRouter from './src/routes/tweets';
+import usersRouter from './routes/users';
+import tweetsRouter from './routes/tweets';
 
 type Request = express.Request;
 type Response = express.Response;

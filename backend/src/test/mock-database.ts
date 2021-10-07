@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
-import User from './entity/User';
-import Tweet from './entity/Tweet';
+import User from '../entity/User';
+import Tweet from '../entity/Tweet';
 
 const options: ConnectionOptions = {
   type: 'sqlite',

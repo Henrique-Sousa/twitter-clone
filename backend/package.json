@@ -5,13 +5,13 @@
   "description": "twitter clone",
   "main": "app.js",
   "scripts": {
-    "start": "node build/backend/app.js",
-    "dev": "ts-node-dev app.ts",
+    "start": "node build/backend/src/app.js",
+    "dev": "ts-node-dev src/app.ts",
     "build": "tsc",
     "clean": "tsc -b . --clean",
     "test": "jest",
     "lint": "eslint \"**/*.{js,ts}\"",
-    "seed": "ts-node-dev seed.ts"
+    "seed": "ts-node-dev db/seed.ts"
   },
   "author": "",
   "license": "ISC",
