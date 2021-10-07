@@ -7,17 +7,16 @@ import {
 import * as dotenv from 'dotenv';
 import User from './src/entity/User';
 import Tweet from './src/entity/Tweet';
-import './src/database';
 
 dotenv.config();
 
 const options: ConnectionOptions = {
   type: 'postgres',
-  port: 5432,
-  host: process.env.NODE_ENV === 'production' ? process.env.POSTGRES_HOST : 'localhost',
-  username: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DB,
+  port: process.env.TYPEORM_PORT ? Number.parseInt(process.env.TYPEORM_PORT, 10) : 5432,
+  host: process.env.TYPEORM_HOST,
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
   synchronize: true,
   logging: false,
   entities: [User, Tweet],

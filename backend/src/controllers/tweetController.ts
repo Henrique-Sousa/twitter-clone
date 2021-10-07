@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Tweet from '../entity/Tweet';
 import User from '../entity/User';
-import { UserResult } from '../../../shared/ApiResults';
 
 const index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
