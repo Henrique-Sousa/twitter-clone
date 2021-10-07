@@ -19,6 +19,7 @@ module.exports = {
   ],
   ignorePatterns: ['node_modules/', 'build/'],
   rules: {
+    'padded-blocks': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     'import/extensions': [
       'error',
