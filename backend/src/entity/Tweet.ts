@@ -16,7 +16,7 @@ export default class Tweet {
   @ManyToOne(() => User, (user) => user.tweets, { nullable: false })
   user!: User;
 
-  @Column({ type: 'varchar', length: 280 })
+  @Column({ type: 'varchar', length: 280, nullable: false })
   text!: string;
 
   @CreateDateColumn()
