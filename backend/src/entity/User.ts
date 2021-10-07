@@ -13,10 +13,10 @@ export default class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ unique: true, length: 50, nullable: false })
   name!: string;
 
-  @Column()
+  @Column({ length: 15, nullable: false })
   username!: string;
 
   @OneToMany(() => Tweet, (tweet) => tweet.user)

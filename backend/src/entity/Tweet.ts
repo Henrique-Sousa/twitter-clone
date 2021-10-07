@@ -13,7 +13,7 @@ export default class Tweet {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => User, (user) => user.tweets)
+  @ManyToOne(() => User, (user) => user.tweets, { nullable: false })
   user!: User;
 
   @Column({ type: 'varchar', length: 280 })
