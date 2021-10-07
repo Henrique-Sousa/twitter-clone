@@ -2,17 +2,17 @@ import React, { useState, Dispatch, SetStateAction } from 'react';
 import Toolbar from './Toolbar';
 import Photo from './Photo';
 import './WhatsHappening.css';
-import Feed from './Feed';
-import { TweetResult } from '../../../shared/ApiResults';
+import { UserResult } from '../../../shared/ApiResults';
+import { TweetObject } from './Objects';
 
 interface Props {
   apiURL: string;
-  // setState: (tweet: { text: string, authorId: number }) => void;
+  handleStatusUpdate: (tweet: TweetObject) => void;
 }
  
 const WhatsHappening: React.FC<Props> = ({ 
   apiURL, 
-  // setState 
+  handleStatusUpdate,
 }) => {
 
   let authorId: number;
@@ -34,10 +34,23 @@ const WhatsHappening: React.FC<Props> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tweet),
       });
-      window.location.reload();
+
+      const response = await fetch(`${apiURL}/users/${authorId}`, { mode: 'cors' });
+      const user: UserResult = await response.json();
+      const tweetObject: TweetObject = {
+        id: -1,
+        text: text,
+        createdAt: new Date(Date.now()),
+        user: {
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          createdAt: new Date(user.createdAt),
+        }
+      };
+      handleStatusUpdate(tweetObject);
     }
 
-    // setState(tweet);
   };
 
   return (

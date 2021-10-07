@@ -65,13 +65,13 @@ export default class Feed extends Component<Props, State> {
         </header>
         <WhatsHappening
           apiURL={this.apiURL}
-          // setState={
-          //   (tweet: TweetObject) => {
-          //     this.setState((prevState: State) => ({
-          //       tweets: [tweet].concat(prevState.tweets),
-          //     }));
-          //   }
-          // }
+          handleStatusUpdate={
+            (tweet: TweetObject) => {
+              this.setState((prevState: State) => ({
+                tweets: [tweet].concat(prevState.tweets),
+              }));
+            }
+          }
         />
         {tweets.map((tweet: TweetObject) => (
           <Tweet
