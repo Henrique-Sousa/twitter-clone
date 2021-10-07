@@ -20,7 +20,7 @@ const WhatsHappening: React.FC<Props> = ({
   let text: string;
   let setText: Dispatch<SetStateAction<string>>;
 
-  [authorId, setAuthorId] = useState<number>(1);
+  [authorId, setAuthorId] = useState<number>(-1);
   [text, setText] = useState<string>('');
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
