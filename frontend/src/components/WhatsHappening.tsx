@@ -34,6 +34,7 @@ const WhatsHappening: React.FC<Props> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tweet),
       });
+      window.location.reload();
     }
 
     // setState(tweet);
