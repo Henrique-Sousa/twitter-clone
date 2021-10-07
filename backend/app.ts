@@ -1,14 +1,18 @@
 import 'reflect-metadata';
 import express from 'express';
 import createError from 'http-errors';
+import { createConnection } from 'typeorm';
+import * as dotenv from 'dotenv';
 import usersRouter from './src/routes/users';
 import tweetsRouter from './src/routes/tweets';
-import './src/database';
 
 type Request = express.Request;
 type Response = express.Response;
 type NextFunction = express.NextFunction;
 type HttpError = createError.HttpError;
+
+dotenv.config();
+createConnection();
 
 const app = express();
 
