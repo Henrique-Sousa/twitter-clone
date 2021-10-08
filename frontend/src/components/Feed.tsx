@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { FC, useState, useEffect } from 'react';
 import WhatsHappening from './WhatsHappening';
 import Tweet from './Tweet';
 import './Feed.css';
@@ -9,80 +9,71 @@ interface Props {
   apiURL: string;
 }
 
-interface State {
-  tweets: Array<TweetObject>;
-}
+const Feed: FC<Props> = (props: Props) => {
 
-export default class Feed extends Component<Props, State> {
+  const [tweets, setTweets] = useState<Array<TweetObject>>([]);
 
-  apiURL: string;
+  const apiURL: string = props.apiURL;
 
-  static async fetchJSON(url: string): Promise<Array<TweetResult>> {
+  const fetchJSON = async (url: string): Promise<Array<TweetResult>> => {
     const response = await fetch(url, { mode: 'cors' });
     const result = await response.json();
     return result;
   }
 
-  constructor(props: Props) {
-    super(props);
-    this.apiURL = props.apiURL;
-    this.state = {
-      tweets: [],
-    };
-  }
+  useEffect(() => {
+    (async () => {
+      try {
+        const tweets: Array<TweetResult> = await fetchJSON(`${apiURL}/tweets`);
 
-  async componentDidMount() {
-    try {
-      const tweets: Array<TweetResult> = await Feed.fetchJSON(`${this.apiURL}/tweets`);
-
-      tweets.forEach(async (tweet: TweetResult) => {
-        let tweetObject: TweetObject = {
-          id: tweet.id,
-          text: tweet.text,
-          createdAt: new Date(tweet.createdAt),
-          user: {
-            id: tweet.user.id,
-            name: tweet.user.name,
-            username: tweet.user.username,
-            createdAt: new Date(tweet.user.createdAt),
-          }
-        };
-        this.setState((prevState) => ({
-          tweets: prevState.tweets.concat([tweetObject]),
-        }));
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  render() {
-    const { tweets } = this.state;
-    return (
-      <main className="feed">
-        <header>
-          <h1 id="home">Home</h1>
-        </header>
-        <WhatsHappening
-          apiURL={this.apiURL}
-          handleStatusUpdate={
-            (tweet: TweetObject) => {
-              this.setState((prevState: State) => ({
-                tweets: [tweet].concat(prevState.tweets),
-              }));
+        tweets.forEach((tweet: TweetResult) => {
+          let tweetObject: TweetObject = {
+            id: tweet.id,
+            text: tweet.text,
+            createdAt: new Date(tweet.createdAt),
+            user: {
+              id: tweet.user.id,
+              name: tweet.user.name,
+              username: tweet.user.username,
+              createdAt: new Date(tweet.user.createdAt),
             }
+          };
+          setTweets((prevState) => (
+            prevState.concat([tweetObject])
+          ));
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
+  return (
+    <main className="feed">
+      <header>
+        <h1 id="home">Home</h1>
+      </header>
+      <WhatsHappening
+        apiURL={apiURL}
+        handleStatusUpdate={
+          (tweet: TweetObject) => {
+            setTweets((prevState) => (
+              [tweet].concat(prevState)
+            ));
           }
+        }
+      />
+      {tweets.map((tweet: TweetObject) => (
+        <Tweet
+          key={tweet.id}
+          name={tweet.user.name}
+          username={tweet.user.username}
+          date={tweet.createdAt}
+          text={tweet.text}
         />
-        {tweets.map((tweet: TweetObject) => (
-          <Tweet
-            key={tweet.id}
-            name={tweet.user.name}
-            username={tweet.user.username}
-            date={tweet.createdAt}
-            text={tweet.text}
-          />
-        ))}
-      </main>
-    );
-  }
+      ))}
+    </main>
+  );
 }
+
+export default Feed;

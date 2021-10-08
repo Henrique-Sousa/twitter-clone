@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Text from './Text';
 import Author from './Author';
 import Photo from './Photo';
@@ -10,7 +11,7 @@ interface Props {
   text: string;
 }
 
-const Tweet: React.FC<Props> = ({
+const Tweet: FC<Props> = ({
   name,
   username,
   date,

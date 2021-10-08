@@ -1,26 +1,19 @@
-import { Component } from 'react';
+import { FC } from 'react';
 import Feed from './components/Feed';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 
-class App extends Component {
+const App: FC = () => {
 
-  apiURL: string;
+  const apiURL: string = 'http://127.0.0.1:3001';
 
-  constructor(props: {}) {
-    super(props);
-    this.apiURL = 'http://127.0.0.1:3001';
-  }
-
-  render() {
-    return (
-      <>
-        <Navbar />
-        <Feed apiURL={this.apiURL} />
-        <Sidebar />
-      </>
-    );
-  }
+  return (
+    <>
+      <Navbar />
+      <Feed apiURL={apiURL} />
+      <Sidebar />
+    </>
+  );
 }
 
 export default App;

@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { FC, useState, Dispatch, SetStateAction } from 'react';
 import Toolbar from './Toolbar';
 import Photo from './Photo';
 import './WhatsHappening.css';
@@ -10,7 +10,7 @@ interface Props {
   handleStatusUpdate: (tweet: TweetObject) => void;
 }
  
-const WhatsHappening: React.FC<Props> = ({ 
+const WhatsHappening: FC<Props> = ({ 
   apiURL, 
   handleStatusUpdate,
 }) => {
