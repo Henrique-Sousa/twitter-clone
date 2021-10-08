@@ -1,4 +1,4 @@
-import { UserResult, TweetResult } from '../../../shared/ApiResults';
+import { UserResult, TweetResult } from '../lib/ApiResult';
 
 export interface UserObject extends Omit<UserResult, 'createdAt'> {
   createdAt: Date;

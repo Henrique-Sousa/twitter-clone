@@ -7,5 +7,5 @@ module.exports = {
   database: process.env.POSTGRES_DB,
   synchronize: true,
   logging: false,
-  entities: ['build/backend/src/entity/**/*.js'],
+  entities: ['build/src/entity/**/*.js'],
 };

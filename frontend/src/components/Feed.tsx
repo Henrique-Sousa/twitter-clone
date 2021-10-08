@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import WhatsHappening from './WhatsHappening';
 import Tweet from './Tweet';
 import './Feed.css';
-import { TweetResult } from '../../../shared/ApiResults';
+import { TweetResult } from '../lib/ApiResult';
 import { TweetObject } from './Objects';
 
 interface Props {

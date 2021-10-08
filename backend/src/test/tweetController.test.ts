@@ -10,7 +10,20 @@ import User from '../entity/User';
 import Tweet from '../entity/Tweet';
 import tweets from '../routes/tweets';
 import options from './mock-database';
-import { TweetResult } from '../../../shared/ApiResults';
+
+interface UserResult {
+  id: number;
+  name: string
+  username: string;
+  createdAt: string;
+}
+
+interface TweetResult {
+  id: number;
+  text: string;
+  createdAt: string;
+  user: UserResult;
+}
 
 beforeEach(() => (
   createConnection(options)

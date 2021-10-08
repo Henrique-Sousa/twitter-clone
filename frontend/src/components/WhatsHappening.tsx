@@ -2,7 +2,7 @@ import React, { FC, useState, Dispatch, SetStateAction } from 'react';
 import Toolbar from './Toolbar';
 import Photo from './Photo';
 import './WhatsHappening.css';
-import { UserResult } from '../../../shared/ApiResults';
+import { UserResult } from '../lib/ApiResult';
 import { TweetObject } from './Objects';
 
 interface Props {
