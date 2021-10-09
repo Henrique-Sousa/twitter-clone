@@ -55,6 +55,18 @@ const getUserByUsername: controllerFunction = async (req, res, next) => {
 
   let user: User | undefined;
 
+  const { username } = req.params;
+
+  if (!/^[A-Za-z0-9_]{1,15}$/.test(username)) {
+    res.status(400);
+    res.send({
+      error: 'Invalid Request',
+      message: `The \`username\` query parameter value [${req.params.username}] does not match ^[A-Za-z0-9_]{1,15}$`,
+      resource: 'user',
+      username,
+    });
+  }
+
   try {
     const userRepository = getRepository(User);
     user = await userRepository.findOne({

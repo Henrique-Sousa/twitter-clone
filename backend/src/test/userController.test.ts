@@ -137,8 +137,20 @@ test('GET users/by/username/:username non existent', async () => {
   await request(app)
     .get('/users/by/username/jack')
     .expect('Content-Type', /json/)
-    .expect(200);
-  expect('{"error":"Not Found","resource":"user","username": "jack"}');
+    .expect(200)
+    .expect('{"error":"Not Found","resource":"user","username":"jack"}');
+});
+
+test('GET users/by/username/:username contains strange characters', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  const result = await request(app)
+    .get('/users/by/username/a.b')
+    .expect(400);
+  expect(result.body.error).toBe('Invalid Request');
+  expect(result.body.resource).toBe('user');
+  expect(result.body.username).toBe('a.b');
+  expect(result.body.message).toBe('The `username` query parameter value [a.b] does not match ^[A-Za-z0-9_]{1,15}$');
 });
 
 test('GET users/by/username/ (empty username)', async () => {
