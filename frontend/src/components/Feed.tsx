@@ -4,6 +4,7 @@ import Tweet from './Tweet';
 import './Feed.css';
 import { TweetResult } from '../lib/ApiResult';
 import { TweetObject } from './Objects';
+import fetchJSON from '../lib/fetchJSON';
 
 interface Props {
   apiURL: string;
@@ -14,12 +15,6 @@ const Feed: FC<Props> = (props: Props) => {
   const [tweets, setTweets] = useState<Array<TweetObject>>([]);
 
   const apiURL: string = props.apiURL;
-
-  const fetchJSON = async (url: string): Promise<Array<TweetResult>> => {
-    const response = await fetch(url, { mode: 'cors' });
-    const result = await response.json();
-    return result;
-  }
 
   useEffect(() => {
     (async () => {
