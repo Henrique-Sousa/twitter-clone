@@ -119,6 +119,21 @@ test('GET users/1a', async () => {
   expect(result.body.message).toBe('The `id` query parameter value [1a] does not match ^[0-9]{1,19}$');
 });
 
+test('GET users/1a', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
+  await userRepository.insert(user3);
+  const result = await request(app)
+    .get('/users/12345678901234567890')
+    .expect('Content-Type', /json/)
+    .expect(400);
+  expect(result.body.error).toBe('Invalid Request');
+  expect(result.body.resource).toBe('user');
+  expect(result.body.id).toBe('12345678901234567890');
+  expect(result.body.message).toBe('The `id` query parameter value [12345678901234567890] does not match ^[0-9]{1,19}$');
+});
+
 test('GET users/by/username/:username', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
