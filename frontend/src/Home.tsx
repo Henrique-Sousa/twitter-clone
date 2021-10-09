@@ -3,7 +3,7 @@ import Feed from './components/Feed';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 
-const App: FC = () => {
+const Home: FC = () => {
 
   const apiURL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3001';
 
@@ -16,4 +16,4 @@ const App: FC = () => {
   );
 }
 
-export default App;
+export default Home;

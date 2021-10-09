@@ -1,3 +1,13 @@
 .tweet__author-name {
   font-weight: bold;
+  color: black;
+}
+
+.tweet__author-name:hover {
+  text-decoration: underline;
+}
+
+.tweet__author-name:active {
+  text-decoration: underline;
+  text-decoration-color: black;
 }

@@ -1,0 +1,7 @@
+.tweet__userlink:link {
+  text-decoration: none;
+}
+
+.tweet__userlink:visited {
+  text-decoration: none;
+}
