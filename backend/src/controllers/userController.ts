@@ -17,17 +17,19 @@ const getUserById: controllerFunction = async (req, res, next) => {
 
   let user: User | undefined;
 
-  const id = Number.parseInt(req.params.id, 10);
+  const { id } = req.params;
 
-  if (Number.isNaN(id)) {
+  if (!/^[0-9]{1,19}$/.test(id)) {
     res.status(405);
     res.send({
       error: 'Invalid Request',
       message: `The \`id\` query parameter value [${req.params.id}] is not a number`,
       resource: 'user',
-      id: req.params.id,
+      id,
     });
   }
+
+  const nid = Number.parseInt(id, 10);
 
   try {
     const userRepository = getRepository(User);
@@ -40,7 +42,7 @@ const getUserById: controllerFunction = async (req, res, next) => {
       res.send({
         error: 'Not Found',
         resource: 'user',
-        id,
+        id: nid,
       });
     }
   } catch (e) {
