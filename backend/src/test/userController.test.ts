@@ -85,7 +85,7 @@ test('GET users/:id deleted', async () => {
   await request(app)
     .get('/users/1')
     .expect('Content-Type', /json/)
-    .expect(405)
+    .expect(200)
     .expect(`{"error":"Not Found","resource":"user","id":${1}}`);
 });
 
@@ -97,7 +97,7 @@ test('GET users/:id not number', async () => {
   const result = await request(app)
     .get('/users/abc')
     .expect('Content-Type', /json/)
-    .expect(405);
+    .expect(400);
   expect(result.body.error).toBe('Invalid Request');
   expect(result.body.resource).toBe('user');
   expect(result.body.id).toBe('abc');
@@ -112,7 +112,7 @@ test('GET users/1a', async () => {
   const result = await request(app)
     .get('/users/1a')
     .expect('Content-Type', /json/)
-    .expect(405);
+    .expect(400);
   expect(result.body.error).toBe('Invalid Request');
   expect(result.body.resource).toBe('user');
   expect(result.body.id).toBe('1a');

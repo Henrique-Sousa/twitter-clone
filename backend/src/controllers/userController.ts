@@ -20,7 +20,7 @@ const getUserById: controllerFunction = async (req, res, next) => {
   const { id } = req.params;
 
   if (!/^[0-9]{1,19}$/.test(id)) {
-    res.status(405);
+    res.status(400);
     res.send({
       error: 'Invalid Request',
       message: `The \`id\` query parameter value [${req.params.id}] is not a number`,
@@ -38,7 +38,7 @@ const getUserById: controllerFunction = async (req, res, next) => {
     if (user) {
       res.send(user);
     } else {
-      res.status(405);
+      res.status(200);
       res.send({
         error: 'Not Found',
         resource: 'user',
