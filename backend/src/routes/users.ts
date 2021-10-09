@@ -3,7 +3,8 @@ import userController from '../controllers/userController';
 
 const users = Router();
 
-users.get('/', userController.index);
-users.get('/:user_id', userController.show);
+users.get('/', userController.getAllUsers);
+users.get('/:id', userController.getUserById);
+users.get('/by/username/:username', userController.getUserByUsername);
 
 export default users;

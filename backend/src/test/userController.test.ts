@@ -82,9 +82,36 @@ test('GET users/:id', async () => {
 test('GET users/:id deleted', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user3);
-  const result = await request(app)
+  await request(app)
     .get('/users/1')
     .expect('Content-Type', /json/)
-    .expect(200)
-    .expect('{"error":"Not Found","resource":"user","id":"1"}');
+    .expect(405)
+    .expect(`{"error":"Not Found","resource":"user","id":${1}}`);
+});
+
+test('GET users/:id not number', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
+  await userRepository.insert(user3);
+  const result = await request(app)
+    .get('/users/abc')
+    .expect('Content-Type', /json/)
+    .expect(405);
+  expect(result.body.error).toBe('Invalid Request');
+  expect(result.body.resource).toBe('user');
+  expect(result.body.id).toBe('abc');
+  expect(result.body.message).toBe('The `id` query parameter value [abc] is not a number');
+});
+
+test('GET users/by/username/:username', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  const result = await request(app)
+    .get('/users/by/username/BarackObama')
+    .expect('Content-Type', /json/)
+    .expect(200);
+  expect(result.body.id).toBe(1);
+  expect(result.body.name).toBe('Barack Obama');
+  expect(result.body.username).toBe('BarackObama');
 });

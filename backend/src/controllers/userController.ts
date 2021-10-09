@@ -1,9 +1,9 @@
 import createError from 'http-errors';
-import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import User from '../entity/User';
+import { controllerFunction } from './functions';
 
-const index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const getAllUsers: controllerFunction = async (_req, res, next) => {
   try {
     const userRepository = getRepository(User);
     const users = await userRepository.find();
@@ -13,25 +13,70 @@ const index = async (req: Request, res: Response, next: NextFunction): Promise<v
   }
 };
 
-const show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  let user;
+const getUserById: controllerFunction = async (req, res, next) => {
+
+  let user: User | undefined;
+
+  const id = Number.parseInt(req.params.id, 10);
+
+  if (Number.isNaN(id)) {
+    res.status(405);
+    res.send({
+      error: 'Invalid Request',
+      message: `The \`id\` query parameter value [${req.params.id}] is not a number`,
+      resource: 'user',
+      id: req.params.id,
+    });
+  }
 
   try {
     const userRepository = getRepository(User);
-    user = await userRepository.findOne(req.params.user_id);
+    user = await userRepository.findOne(id);
+
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(405);
+      res.send({
+        error: 'Not Found',
+        resource: 'user',
+        id,
+      });
+    }
   } catch (e) {
     next(createError(500));
   }
 
-  if (user) {
-    res.send(user);
-  } else {
-    res.send({
-      error: 'Not Found',
-      resource: 'user',
-      id: req.params.user_id,
-    });
-  }
 };
 
-export default { index, show };
+const getUserByUsername: controllerFunction = async (req, res, next) => {
+
+  let user: User | undefined;
+
+  try {
+    const userRepository = getRepository(User);
+    user = await userRepository.findOne({
+      where: { username: req.params.username },
+    });
+
+    if (user) {
+      res.send(user);
+    } else {
+      res.send({
+        error: 'Not Found',
+        resource: 'user',
+        username: req.params.username,
+      });
+    }
+  } catch (e) {
+    next(createError(500));
+  }
+
+};
+
+export default
+{
+  getAllUsers,
+  getUserById,
+  getUserByUsername,
+};
