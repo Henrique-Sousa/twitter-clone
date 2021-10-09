@@ -153,6 +153,18 @@ test('GET users/by/username/:username contains strange characters', async () => 
   expect(result.body.message).toBe('The `username` query parameter value [a.b] does not match ^[A-Za-z0-9_]{1,15}$');
 });
 
+test('GET users/by/username/:username greater than 15', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  const result = await request(app)
+    .get('/users/by/username/abcdefghijklmnop')
+    .expect(400);
+  expect(result.body.error).toBe('Invalid Request');
+  expect(result.body.resource).toBe('user');
+  expect(result.body.username).toBe('abcdefghijklmnop');
+  expect(result.body.message).toBe('The `username` query parameter value [abcdefghijklmnop] does not match ^[A-Za-z0-9_]{1,15}$');
+});
+
 test('GET users/by/username/ (empty username)', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
