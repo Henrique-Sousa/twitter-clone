@@ -23,7 +23,7 @@ const getUserById: controllerFunction = async (req, res, next) => {
     res.status(400);
     res.send({
       error: 'Invalid Request',
-      message: `The \`id\` query parameter value [${req.params.id}] is not a number`,
+      message: `The \`id\` query parameter value [${req.params.id}] does not match ^[0-9]{1,19}$`,
       resource: 'user',
       id,
     });

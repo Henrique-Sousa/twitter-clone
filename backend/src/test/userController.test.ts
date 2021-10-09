@@ -95,13 +95,13 @@ test('GET users/:id not number', async () => {
   await userRepository.insert(user2);
   await userRepository.insert(user3);
   const result = await request(app)
-    .get('/users/abc')
+    .get('/users/1.2')
     .expect('Content-Type', /json/)
     .expect(400);
   expect(result.body.error).toBe('Invalid Request');
   expect(result.body.resource).toBe('user');
-  expect(result.body.id).toBe('abc');
-  expect(result.body.message).toBe('The `id` query parameter value [abc] is not a number');
+  expect(result.body.id).toBe('1.2');
+  expect(result.body.message).toBe('The `id` query parameter value [1.2] does not match ^[0-9]{1,19}$');
 });
 
 test('GET users/1a', async () => {
@@ -116,7 +116,7 @@ test('GET users/1a', async () => {
   expect(result.body.error).toBe('Invalid Request');
   expect(result.body.resource).toBe('user');
   expect(result.body.id).toBe('1a');
-  expect(result.body.message).toBe('The `id` query parameter value [1a] is not a number');
+  expect(result.body.message).toBe('The `id` query parameter value [1a] does not match ^[0-9]{1,19}$');
 });
 
 test('GET users/by/username/:username', async () => {
