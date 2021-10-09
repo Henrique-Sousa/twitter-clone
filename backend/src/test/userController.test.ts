@@ -130,3 +130,11 @@ test('GET users/by/username/:username', async () => {
   expect(result.body.name).toBe('Barack Obama');
   expect(result.body.username).toBe('BarackObama');
 });
+
+test('GET users/by/username/ (empty username)', async () => {
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1);
+  await request(app)
+    .get('/users/by/username/')
+    .expect(404);
+});
