@@ -4,9 +4,12 @@ import User from '../entity/User';
 import { controllerFunction } from './functions';
 
 export const getAllUsers: controllerFunction = async (_req, res, next) => {
+
+  let users: Array<User>;
+
   try {
     const userRepository = getRepository(User);
-    const users = await userRepository.find();
+    users = await userRepository.find();
     res.send(users);
   } catch (e) {
     next(createError(500));

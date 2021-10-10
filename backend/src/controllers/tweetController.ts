@@ -4,10 +4,13 @@ import Tweet from '../entity/Tweet';
 import User from '../entity/User';
 import { controllerFunction } from './functions';
 
-export const getAllTweets: controllerFunction = async (req, res, next) => {
+export const getAllTweets: controllerFunction = async (_req, res, next) => {
+
+  let tweets: Array<Tweet>;
+
   try {
     const tweetRepository = getRepository(Tweet);
-    const tweets = await tweetRepository.find({
+    tweets = await tweetRepository.find({
       relations: ['user'],
       order: {
         createdAt: 'DESC',
@@ -20,6 +23,7 @@ export const getAllTweets: controllerFunction = async (req, res, next) => {
 };
 
 export const getTweetById: controllerFunction = async (req, res, next) => {
+
   let tweet: Tweet | undefined;
 
   const { id } = req.params;
@@ -61,25 +65,27 @@ export const getTweetById: controllerFunction = async (req, res, next) => {
 };
 
 export const createTweet: controllerFunction = async (req, res, next) => {
-  const userRepository = getRepository(User);
-  const tweetRepository = getRepository(Tweet);
-  const user = await userRepository.findOne({
-    where: { id: req.body.authorId },
-  });
 
-  if (user) {
-    const currentUser = {
-      id: user.id,
-      name: user.name,
-      username: user.username,
-      createdAt: user.createdAt,
-    };
-    const tweetToSend = {
-      user: currentUser,
-      text: req.body.text,
-    };
-    await tweetRepository.insert(tweetToSend);
-    res.end();
+  let user: User | undefined;
+
+  try {
+    const userRepository = getRepository(User);
+    const tweetRepository = getRepository(Tweet);
+
+    user = await userRepository.findOne({
+      where: { id: req.body.authorId },
+    });
+
+    if (user) {
+      const tweetToSend = {
+        user,
+        text: req.body.text,
+      };
+      await tweetRepository.insert(tweetToSend);
+      res.end();
+    }
+  } catch (e) {
+    next(createError(500));
   }
 };
 
