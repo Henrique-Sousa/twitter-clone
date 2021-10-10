@@ -29,7 +29,7 @@ const user2 = {
   username: 'justinbieber',
 };
 
-const user3 = {
+const deletedUser = {
   name: 'jack',
   username: 'jack',
   deletedAt: new Date(Date.now()),
@@ -59,7 +59,7 @@ test('GET users with a (soft) deleted entry', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(user3);
+  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users')
     .expect('Content-Type', /json/)
@@ -81,19 +81,20 @@ test('GET users/:id', async () => {
 
 test('GET users/:id deleted', async () => {
   const userRepository = getRepository(User);
-  await userRepository.insert(user3);
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
   await request(app)
-    .get('/users/1')
+    .get('/users/4')
     .expect('Content-Type', /json/)
     .expect(200)
-    .expect(`{"error":"Not Found","resource":"user","id":${1}}`);
+    .expect(`{"error":"Not Found","resource":"user","id":${4}}`);
 });
 
 test('GET users/:id not number', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(user3);
+  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users/1.2')
     .expect('Content-Type', /json/)
@@ -108,7 +109,7 @@ test('GET users/1a', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(user3);
+  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users/1a')
     .expect('Content-Type', /json/)
@@ -123,7 +124,7 @@ test('GET users/1a', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(user3);
+  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users/12345678901234567890')
     .expect('Content-Type', /json/)
