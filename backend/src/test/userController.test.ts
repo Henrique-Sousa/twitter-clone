@@ -83,11 +83,17 @@ test('GET users/:id non existent', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await request(app)
+  const result = await request(app)
     .get('/users/4')
     .expect('Content-Type', /json/)
-    .expect(200)
-    .expect(`{"error":"Not Found","resource":"user","id":${4}}`);
+    .expect(200);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Not Found Error');
+  expect(error.detail).toBe('Could not find user with id: [4].');
+  expect(error.resource_type).toBe('user');
+  expect(error.resource_id).toBe('4');
+  expect(error.parameter).toBe('id');
 });
 
 test('GET users/1.2', async () => {
@@ -99,10 +105,12 @@ test('GET users/1.2', async () => {
     .get('/users/1.2')
     .expect('Content-Type', /json/)
     .expect(400);
-  expect(result.body.error).toBe('Invalid Request');
-  expect(result.body.resource).toBe('user');
-  expect(result.body.id).toBe('1.2');
-  expect(result.body.message).toBe('The `id` query parameter value [1.2] does not match ^[0-9]{1,19}$');
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `id` query parameter value [1.2] does not match ^[0-9]{1,19}$');
+  expect(error.id).toBe('1.2');
+
 });
 
 test('GET users/1a', async () => {
@@ -114,10 +122,11 @@ test('GET users/1a', async () => {
     .get('/users/1a')
     .expect('Content-Type', /json/)
     .expect(400);
-  expect(result.body.error).toBe('Invalid Request');
-  expect(result.body.resource).toBe('user');
-  expect(result.body.id).toBe('1a');
-  expect(result.body.message).toBe('The `id` query parameter value [1a] does not match ^[0-9]{1,19}$');
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `id` query parameter value [1a] does not match ^[0-9]{1,19}$');
+  expect(error.id).toBe('1a');
 });
 
 test('GET users/12345678901234567890', async () => {
@@ -129,10 +138,11 @@ test('GET users/12345678901234567890', async () => {
     .get('/users/12345678901234567890')
     .expect('Content-Type', /json/)
     .expect(400);
-  expect(result.body.error).toBe('Invalid Request');
-  expect(result.body.resource).toBe('user');
-  expect(result.body.id).toBe('12345678901234567890');
-  expect(result.body.message).toBe('The `id` query parameter value [12345678901234567890] does not match ^[0-9]{1,19}$');
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `id` query parameter value [12345678901234567890] does not match ^[0-9]{1,19}$');
+  expect(error.id).toBe('12345678901234567890');
 });
 
 test('GET users/by/username/:username', async () => {
@@ -150,11 +160,17 @@ test('GET users/by/username/:username', async () => {
 test('GET users/by/username/:username non existent', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
-  await request(app)
+  const result = await request(app)
     .get('/users/by/username/jack')
     .expect('Content-Type', /json/)
-    .expect(200)
-    .expect('{"error":"Not Found","resource":"user","username":"jack"}');
+    .expect(200);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Not Found Error');
+  expect(error.detail).toBe('Could not find user with username: [jack].');
+  expect(error.resource_type).toBe('user');
+  expect(error.resource_id).toBe('jack');
+  expect(error.parameter).toBe('username');
 });
 
 test('GET users/by/username/a.b', async () => {
@@ -163,10 +179,11 @@ test('GET users/by/username/a.b', async () => {
   const result = await request(app)
     .get('/users/by/username/a.b')
     .expect(400);
-  expect(result.body.error).toBe('Invalid Request');
-  expect(result.body.resource).toBe('user');
-  expect(result.body.username).toBe('a.b');
-  expect(result.body.message).toBe('The `username` query parameter value [a.b] does not match ^[A-Za-z0-9_]{1,15}$');
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `username` query parameter value [a.b] does not match ^[A-Za-z0-9_]{1,15}$');
+  expect(error.username).toBe('a.b');
 });
 
 test('GET users/by/username/:username greater than 15', async () => {
@@ -175,10 +192,11 @@ test('GET users/by/username/:username greater than 15', async () => {
   const result = await request(app)
     .get('/users/by/username/abcdefghijklmnop')
     .expect(400);
-  expect(result.body.error).toBe('Invalid Request');
-  expect(result.body.resource).toBe('user');
-  expect(result.body.username).toBe('abcdefghijklmnop');
-  expect(result.body.message).toBe('The `username` query parameter value [abcdefghijklmnop] does not match ^[A-Za-z0-9_]{1,15}$');
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `username` query parameter value [abcdefghijklmnop] does not match ^[A-Za-z0-9_]{1,15}$');
+  expect(error.username).toBe('abcdefghijklmnop');
 });
 
 test('GET users/by/username/ (empty username)', async () => {

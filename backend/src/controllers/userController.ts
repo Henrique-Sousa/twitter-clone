@@ -22,14 +22,13 @@ const getUserById: controllerFunction = async (req, res, next) => {
   if (!/^[0-9]{1,19}$/.test(id)) {
     res.status(400);
     res.send({
-      error: 'Invalid Request',
-      message: `The \`id\` query parameter value [${req.params.id}] does not match ^[0-9]{1,19}$`,
-      resource: 'user',
-      id,
+      error: {
+        title: 'Invalid Request',
+        detail: `The \`id\` query parameter value [${id}] does not match ^[0-9]{1,19}$`,
+        id: `${id}`,
+      },
     });
   }
-
-  const nid = Number.parseInt(id, 10);
 
   try {
     const userRepository = getRepository(User);
@@ -40,9 +39,13 @@ const getUserById: controllerFunction = async (req, res, next) => {
     } else {
       res.status(200);
       res.send({
-        error: 'Not Found',
-        resource: 'user',
-        id: nid,
+        error: {
+          title: 'Not Found Error',
+          detail: `Could not find user with id: [${id}].`,
+          resource_type: 'user',
+          resource_id: id,
+          parameter: 'id',
+        },
       });
     }
   } catch (e) {
@@ -60,10 +63,11 @@ const getUserByUsername: controllerFunction = async (req, res, next) => {
   if (!/^[A-Za-z0-9_]{1,15}$/.test(username)) {
     res.status(400);
     res.send({
-      error: 'Invalid Request',
-      message: `The \`username\` query parameter value [${req.params.username}] does not match ^[A-Za-z0-9_]{1,15}$`,
-      resource: 'user',
-      username,
+      error: {
+        title: 'Invalid Request',
+        detail: `The \`username\` query parameter value [${req.params.username}] does not match ^[A-Za-z0-9_]{1,15}$`,
+        username: `${username}`,
+      },
     });
   }
 
@@ -77,9 +81,13 @@ const getUserByUsername: controllerFunction = async (req, res, next) => {
       res.send(user);
     } else {
       res.send({
-        error: 'Not Found',
-        resource: 'user',
-        username: req.params.username,
+        error: {
+          title: 'Not Found Error',
+          detail: `Could not find user with username: [${username}].`,
+          resource_type: 'user',
+          resource_id: username,
+          parameter: 'username',
+        },
       });
     }
   } catch (e) {

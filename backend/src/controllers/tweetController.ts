@@ -27,22 +27,23 @@ const show = async (req: Request, res: Response, next: NextFunction): Promise<vo
     tweet = await tweetRepository.findOne(req.params.tweet_id, {
       relations: ['user'],
     });
+
+    if (tweet) {
+      res.send(tweet);
+    } else {
+      res.send({
+        error: 'Not Found',
+        resource: 'tweet',
+        id: req.params.tweet_id,
+      });
+    }
   } catch (e) {
     next(createError(500));
   }
 
-  if (tweet) {
-    res.send(tweet);
-  } else {
-    res.send({
-      error: 'Not Found',
-      resource: 'tweet',
-      id: req.params.tweet_id,
-    });
-  }
 };
 
-const create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const create = async (req: Request, res: Response): Promise<void> => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
   const user = await userRepository.findOne({
