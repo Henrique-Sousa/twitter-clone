@@ -19,9 +19,13 @@ const Profile: FC<Props> = ({ match }) => {
 
   useEffect(() => {
     (async () => {
-      const userResult: UserResult = await fetchJSON(`${apiURL}/users/by/username/${match.params.username}`);
-      setName(userResult.name);
-      setUsername(userResult.username);
+      try {
+        const userResult: UserResult = await fetchJSON(`${apiURL}/users/by/username/${match.params.username}`);
+        setName(userResult.name);
+        setUsername(userResult.username);
+      } catch (e) { 
+        console.log(e);
+      }
     })();
   }, []);
 
