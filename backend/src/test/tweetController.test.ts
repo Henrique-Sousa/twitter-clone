@@ -49,6 +49,7 @@ const text2 = 'If hat(theta) is a the MLE of theta, f(hat(theta)) is the MLE of 
 const text3 = 'just setting up my twttr';
 
 const app = express();
+app.use(express.json());
 
 app.use('/tweets', tweets);
 
@@ -70,12 +71,12 @@ test('GET tweets', async () => {
     .expect(200);
   const element1 = result.body.find((e: TweetResult) => e.id === 1);
   const element2 = result.body.find((e: TweetResult) => e.id === 2);
-  expect(element1.user.username).toBe('DataSciFact');
-  expect(element2.user.username).toBe('DataSciFact');
   expect(element1.id).toBe(1);
   expect(element2.id).toBe(2);
   expect(element1.text).toBe(text1);
   expect(element2.text).toBe(text2);
+  expect(element1.user.username).toBe('DataSciFact');
+  expect(element2.user.username).toBe('DataSciFact');
 });
 
 test('GET tweets with a (soft) deleted entry', async () => {
@@ -179,4 +180,25 @@ test('GET tweets/12345678901234567890', async () => {
   expect(error.title).toBe('Invalid Request');
   expect(error.detail).toBe('The `id` query parameter value [12345678901234567890] does not match ^[0-9]{1,19}$');
   expect(error.id).toBe('12345678901234567890');
+});
+
+test('create tweet', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1);
+  await userRepository.insert(user2);
+  await request(app)
+    .post('/tweets/')
+    .set('Content-type', 'application/json')
+    .send({ text: text3, authorId: 2 });
+  const result = await tweetRepository.findOne(1, {
+    relations: ['user'],
+  });
+  expect(result);
+  if (result) {
+    expect(result.id).toBe(1);
+    expect(result.text).toBe(text3);
+    expect(result.user.name).toBe('jack');
+    expect(result.user.username).toBe('jack');
+  }
 });
