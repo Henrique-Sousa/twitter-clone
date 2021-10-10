@@ -79,7 +79,7 @@ test('GET users/:id', async () => {
   expect(result.body.username).toBe('BarackObama');
 });
 
-test('GET users/:id deleted', async () => {
+test('GET users/:id non existent', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
@@ -90,7 +90,7 @@ test('GET users/:id deleted', async () => {
     .expect(`{"error":"Not Found","resource":"user","id":${4}}`);
 });
 
-test('GET users/:id not number', async () => {
+test('GET users/1.2', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
@@ -120,7 +120,7 @@ test('GET users/1a', async () => {
   expect(result.body.message).toBe('The `id` query parameter value [1a] does not match ^[0-9]{1,19}$');
 });
 
-test('GET users/1a', async () => {
+test('GET users/12345678901234567890', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
@@ -157,7 +157,7 @@ test('GET users/by/username/:username non existent', async () => {
     .expect('{"error":"Not Found","resource":"user","username":"jack"}');
 });
 
-test('GET users/by/username/:username contains strange characters', async () => {
+test('GET users/by/username/a.b', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   const result = await request(app)
