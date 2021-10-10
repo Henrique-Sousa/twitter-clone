@@ -1,4 +1,6 @@
-import React, { FC, useState, Dispatch, SetStateAction } from 'react';
+import {
+  FC, useState, Dispatch, SetStateAction, FormEvent,
+} from 'react';
 import Toolbar from './Toolbar';
 import Photo from './Photo';
 import './WhatsHappening.css';
@@ -9,21 +11,16 @@ interface Props {
   apiURL: string;
   handleStatusUpdate: (tweet: TweetObject) => void;
 }
- 
-const WhatsHappening: FC<Props> = ({ 
-  apiURL, 
+
+const WhatsHappening: FC<Props> = ({
+  apiURL,
   handleStatusUpdate,
 }) => {
 
-  let authorId: number;
-  let setAuthorId: Dispatch<SetStateAction<number>>;
-  let text: string;
-  let setText: Dispatch<SetStateAction<string>>;
+  const [authorId, setAuthorId]: [number, Dispatch<SetStateAction<number>>] = useState<number>(-1);
+  const [text, setText]: [string, Dispatch<SetStateAction<string>>] = useState<string>('');
 
-  [authorId, setAuthorId] = useState<number>(-1);
-  [text, setText] = useState<string>('');
-
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const tweet = { authorId, text };
@@ -39,14 +36,14 @@ const WhatsHappening: FC<Props> = ({
       const user: UserResult = await response.json();
       const tweetObject: TweetObject = {
         id: -1,
-        text: text,
+        text,
         createdAt: new Date(Date.now()),
         user: {
           id: user.id,
           name: user.name,
           username: user.username,
           createdAt: new Date(user.createdAt),
-        }
+        },
       };
       handleStatusUpdate(tweetObject);
     }
@@ -69,7 +66,7 @@ const WhatsHappening: FC<Props> = ({
           <input
             type="number"
             id="authorId"
-            onChange={(e) => setAuthorId(Number.parseInt(e.target.value))}
+            onChange={(e) => setAuthorId(Number.parseInt(e.target.value, 10))}
           />
         </div>
         <div>

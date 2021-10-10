@@ -2,9 +2,7 @@ import 'reflect-metadata';
 import request from 'supertest';
 import express from 'express';
 import {
-  createConnection,
-  getConnection,
-  getRepository,
+  createConnection, getConnection, getRepository,
 } from 'typeorm';
 import User from '../entity/User';
 import Tweet from '../entity/Tweet';

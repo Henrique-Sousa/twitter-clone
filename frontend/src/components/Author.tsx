@@ -11,15 +11,10 @@ interface Props {
   date: Date;
 }
 
-const Author: FC<Props> = (props: Props) => {
-  let name: string;
-  let username: string;
-  let dateDisplayed: string;
+const Author: FC<Props> = ({ name, username, date }: Props) => {
 
-  name = props.name;
-  username = props.username;
-  dateDisplayed = getFormatedDate(props.date, new Date(Date.now()));
-  
+  const dateDisplayed: string = getFormatedDate(date, new Date(Date.now()));
+
   return (
     <p className="tweet__author-area">
       <Link to={`/${username}`} className="tweet__userlink">
@@ -31,4 +26,4 @@ const Author: FC<Props> = (props: Props) => {
   );
 };
 
-export default Author; 
+export default Author;

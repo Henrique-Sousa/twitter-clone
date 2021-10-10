@@ -14,6 +14,6 @@ const Home: FC = () => {
       <Sidebar />
     </>
   );
-}
+};
 
 export default Home;

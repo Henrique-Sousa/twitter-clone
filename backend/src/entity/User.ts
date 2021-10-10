@@ -1,10 +1,6 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  CreateDateColumn,
-  DeleteDateColumn,
+  Entity, PrimaryGeneratedColumn, Column,
+  OneToMany, CreateDateColumn, DeleteDateColumn,
 } from 'typeorm';
 import Tweet from './Tweet';
 

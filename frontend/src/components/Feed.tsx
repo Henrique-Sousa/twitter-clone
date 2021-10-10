@@ -10,19 +10,17 @@ interface Props {
   apiURL: string;
 }
 
-const Feed: FC<Props> = (props: Props) => {
+const Feed: FC<Props> = ({ apiURL }: Props) => {
 
   const [tweets, setTweets] = useState<Array<TweetObject>>([]);
-
-  const apiURL: string = props.apiURL;
 
   useEffect(() => {
     (async () => {
       try {
-        const tweets: Array<TweetResult> = await fetchJSON(`${apiURL}/tweets`);
+        const tweetsResult: Array<TweetResult> = await fetchJSON(`${apiURL}/tweets`);
 
-        tweets.forEach((tweet: TweetResult) => {
-          let tweetObject: TweetObject = {
+        tweetsResult.forEach((tweet: TweetResult) => {
+          const tweetObject: TweetObject = {
             id: tweet.id,
             text: tweet.text,
             createdAt: new Date(tweet.createdAt),
@@ -31,14 +29,14 @@ const Feed: FC<Props> = (props: Props) => {
               name: tweet.user.name,
               username: tweet.user.username,
               createdAt: new Date(tweet.user.createdAt),
-            }
+            },
           };
           setTweets((prevState) => (
             prevState.concat([tweetObject])
           ));
         });
       } catch (err) {
-        console.log(err);
+        // ..
       }
     })();
   }, []);
@@ -69,6 +67,6 @@ const Feed: FC<Props> = (props: Props) => {
       ))}
     </main>
   );
-}
+};
 
 export default Feed;

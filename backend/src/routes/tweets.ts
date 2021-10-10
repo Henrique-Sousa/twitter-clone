@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import {
-  getAllTweets,
-  getTweetById,
-  createTweet,
+  getAllTweets, getTweetById, createTweet,
 } from '../controllers/tweetController';
 
 const tweets = Router();
