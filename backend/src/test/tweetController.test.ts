@@ -50,7 +50,7 @@ const text3 = 'just setting up my twttr';
 
 const app = express();
 
-app.use('/', tweets);
+app.use('/tweets', tweets);
 
 test('GET tweets', async () => {
   const userRepository = getRepository(User);
@@ -65,7 +65,7 @@ test('GET tweets', async () => {
     text: text2,
   });
   const result = await request(app)
-    .get('/')
+    .get('/tweets/')
     .expect('Content-Type', /json/)
     .expect(200);
   const element1 = result.body.find((e: TweetResult) => e.id === 1);
@@ -97,7 +97,7 @@ test('GET tweets with a (soft) deleted entry', async () => {
     text: text3,
   });
   const result = await request(app)
-    .get('/')
+    .get('/tweets/')
     .expect('Content-Type', /json/)
     .expect(200);
   expect(result.body.length).toBe(2);
@@ -112,7 +112,7 @@ test('GET tweets/:id', async () => {
     text: text3,
   });
   const result = await request(app)
-    .get('/1')
+    .get('/tweets/1')
     .expect('Content-Type', /json/)
     .expect(200);
   expect(result.body.id).toBe(1);
@@ -121,7 +121,7 @@ test('GET tweets/:id', async () => {
   expect(result.body.text).toBe(text3);
 });
 
-test('GET tweets/:id deleted', async () => {
+test('GET tweets/:id soft deleted', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
   await userRepository.insert(user1);
@@ -130,9 +130,53 @@ test('GET tweets/:id deleted', async () => {
     text: text1,
     deletedAt: new Date(Date.now()),
   });
-  await request(app)
-    .get('/1')
+  const result = await request(app)
+    .get('/tweets/1')
     .expect(200)
+    .expect('Content-Type', /json/);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Not Found Error');
+  expect(error.detail).toBe('Could not find tweet with id: [1].');
+  expect(error.resource_type).toBe('tweet');
+  expect(error.resource_id).toBe('1');
+  expect(error.parameter).toBe('id');
+});
+
+test('GET tweets/3.4 soft deleted', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1);
+  await tweetRepository.insert({
+    user: user1,
+    text: text1,
+  });
+  const result = await request(app)
+    .get('/tweets/3.4')
+    .expect(400)
+    .expect('Content-Type', /json/);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `id` query parameter value [3.4] does not match ^[0-9]{1,19}$');
+  expect(error.id).toBe('3.4');
+});
+
+test('GET tweets/12345678901234567890', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1);
+  await tweetRepository.insert({
+    user: user1,
+    text: text1,
+  });
+  const result = await request(app)
+    .get('/tweets/12345678901234567890')
     .expect('Content-Type', /json/)
-    .expect('{"error":"Not Found","resource":"tweet","id":"1"}');
+    .expect(400);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Invalid Request');
+  expect(error.detail).toBe('The `id` query parameter value [12345678901234567890] does not match ^[0-9]{1,19}$');
+  expect(error.id).toBe('12345678901234567890');
 });

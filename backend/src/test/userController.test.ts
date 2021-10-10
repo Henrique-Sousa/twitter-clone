@@ -110,7 +110,6 @@ test('GET users/1.2', async () => {
   expect(error.title).toBe('Invalid Request');
   expect(error.detail).toBe('The `id` query parameter value [1.2] does not match ^[0-9]{1,19}$');
   expect(error.id).toBe('1.2');
-
 });
 
 test('GET users/1a', async () => {

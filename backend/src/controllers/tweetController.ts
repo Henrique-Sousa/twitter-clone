@@ -1,10 +1,10 @@
 import createError from 'http-errors';
-import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 import Tweet from '../entity/Tweet';
 import User from '../entity/User';
+import { controllerFunction } from './functions';
 
-const index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const getAllTweets: controllerFunction = async (req, res, next) => {
   try {
     const tweetRepository = getRepository(Tweet);
     const tweets = await tweetRepository.find({
@@ -19,12 +19,25 @@ const index = async (req: Request, res: Response, next: NextFunction): Promise<v
   }
 };
 
-const show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  let tweet;
+export const getTweetById: controllerFunction = async (req, res, next) => {
+  let tweet: Tweet | undefined;
+
+  const { id } = req.params;
+
+  if (!/^[0-9]{1,19}$/.test(id)) {
+    res.status(400);
+    res.send({
+      error: {
+        title: 'Invalid Request',
+        detail: `The \`id\` query parameter value [${id}] does not match ^[0-9]{1,19}$`,
+        id: `${id}`,
+      },
+    });
+  }
 
   try {
     const tweetRepository = getRepository(Tweet);
-    tweet = await tweetRepository.findOne(req.params.tweet_id, {
+    tweet = await tweetRepository.findOne(req.params.id, {
       relations: ['user'],
     });
 
@@ -32,9 +45,13 @@ const show = async (req: Request, res: Response, next: NextFunction): Promise<vo
       res.send(tweet);
     } else {
       res.send({
-        error: 'Not Found',
-        resource: 'tweet',
-        id: req.params.tweet_id,
+        error: {
+          title: 'Not Found Error',
+          detail: `Could not find tweet with id: [${id}].`,
+          resource_type: 'tweet',
+          resource_id: id,
+          parameter: 'id',
+        },
       });
     }
   } catch (e) {
@@ -43,7 +60,7 @@ const show = async (req: Request, res: Response, next: NextFunction): Promise<vo
 
 };
 
-const create = async (req: Request, res: Response): Promise<void> => {
+export const createTweet: controllerFunction = async (req, res, next) => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
   const user = await userRepository.findOne({
@@ -69,17 +86,10 @@ const create = async (req: Request, res: Response): Promise<void> => {
 // const destroy = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 //   try {
 //     await Tweet.destroy({
-//       where: { id: req.params.tweet_id },
+//       where: { id: req.params.id },
 //     });
 //     res.end();
 //   } catch (e) {
 //     next(createError(500));
 //   }
 // };
-
-export default {
-  index,
-  show,
-  create,
-//   destroy,
-};

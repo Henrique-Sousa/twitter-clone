@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import User from '../entity/User';
 import { controllerFunction } from './functions';
 
-const getAllUsers: controllerFunction = async (_req, res, next) => {
+export const getAllUsers: controllerFunction = async (_req, res, next) => {
   try {
     const userRepository = getRepository(User);
     const users = await userRepository.find();
@@ -13,7 +13,7 @@ const getAllUsers: controllerFunction = async (_req, res, next) => {
   }
 };
 
-const getUserById: controllerFunction = async (req, res, next) => {
+export const getUserById: controllerFunction = async (req, res, next) => {
 
   let user: User | undefined;
 
@@ -37,7 +37,6 @@ const getUserById: controllerFunction = async (req, res, next) => {
     if (user) {
       res.send(user);
     } else {
-      res.status(200);
       res.send({
         error: {
           title: 'Not Found Error',
@@ -54,7 +53,7 @@ const getUserById: controllerFunction = async (req, res, next) => {
 
 };
 
-const getUserByUsername: controllerFunction = async (req, res, next) => {
+export const getUserByUsername: controllerFunction = async (req, res, next) => {
 
   let user: User | undefined;
 
@@ -93,12 +92,4 @@ const getUserByUsername: controllerFunction = async (req, res, next) => {
   } catch (e) {
     next(createError(500));
   }
-
-};
-
-export default
-{
-  getAllUsers,
-  getUserById,
-  getUserByUsername,
 };
