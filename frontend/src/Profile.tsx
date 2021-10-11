@@ -29,11 +29,11 @@ const Profile: FC<Props> = ({ match }) => {
   return (
     <div>
       <h1>
-        Hello
+        Name:
         {` ${name}`}
       </h1>
       <p>
-        Your username is
+        Username:
         {` ${username}`}
       </p>
     </div>
