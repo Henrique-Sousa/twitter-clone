@@ -15,6 +15,9 @@ export default class User {
   @Column({ length: 15, nullable: false })
   username!: string;
 
+  @Column({ length: 128, nullable: false })
+  password!: string;
+
   @OneToMany(() => Tweet, (tweet) => tweet.user)
   tweets?: Tweet[];
 

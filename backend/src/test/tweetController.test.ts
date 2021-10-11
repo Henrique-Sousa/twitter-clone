@@ -35,11 +35,13 @@ afterEach(() => {
 const user1 = {
   name: 'Data Science Fact',
   username: 'DataSciFact',
+  password: 'password',
 };
 
 const user2 = {
   name: 'jack',
   username: 'jack',
+  password: '12345678',
 };
 
 const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';

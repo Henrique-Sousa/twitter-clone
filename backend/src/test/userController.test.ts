@@ -20,20 +20,24 @@ afterEach(() => {
 const user1 = {
   name: 'Barack Obama',
   username: 'BarackObama',
+  password: 'password',
 };
 
 const user2 = {
   name: 'Justin Bieber',
   username: 'justinbieber',
+  password: '12345678',
 };
 
 const deletedUser = {
   name: 'jack',
   username: 'jack',
+  password: 'password',
   deletedAt: new Date(Date.now()),
 };
 
 const app = express();
+app.use(express.json());
 
 app.use('/users', usersRouter);
 
@@ -202,4 +206,19 @@ test('GET users/by/username/ (empty username)', async () => {
   await request(app)
     .get('/users/by/username/')
     .expect(404);
+});
+
+test('create user', async () => {
+  const userRepository = getRepository(User);
+  await request(app)
+    .post('/users/')
+    .set('Content-type', 'application/json')
+    .send(user1);
+  const result = await userRepository.findOne(1);
+  expect(result);
+  if (result) {
+    expect(result.id).toBe(1);
+    expect(result.name).toBe('Barack Obama');
+    expect(result.username).toBe('BarackObama');
+  }
 });

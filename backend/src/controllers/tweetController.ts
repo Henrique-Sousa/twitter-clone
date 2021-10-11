@@ -77,11 +77,11 @@ export const createTweet: controllerFunction = async (req, res, next) => {
     });
 
     if (user) {
-      const tweetToSend = {
+      const tweet = {
         user,
         text: req.body.text,
       };
-      await tweetRepository.insert(tweetToSend);
+      await tweetRepository.insert(tweet);
       res.end();
     }
   } catch (e) {

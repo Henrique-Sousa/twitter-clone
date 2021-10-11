@@ -1,5 +1,6 @@
 import createError from 'http-errors';
 import { getRepository } from 'typeorm';
+import bcrypt from 'bcryptjs';
 import User from '../entity/User';
 import { controllerFunction } from './functions';
 
@@ -67,7 +68,7 @@ export const getUserByUsername: controllerFunction = async (req, res, next) => {
     res.send({
       error: {
         title: 'Invalid Request',
-        detail: `The \`username\` query parameter value [${req.params.username}] does not match ^[A-Za-z0-9_]{1,15}$`,
+        detail: `The \`username\` query parameter value [${username}] does not match ^[A-Za-z0-9_]{1,15}$`,
         username: `${username}`,
       },
     });
@@ -76,7 +77,7 @@ export const getUserByUsername: controllerFunction = async (req, res, next) => {
   try {
     const userRepository = getRepository(User);
     user = await userRepository.findOne({
-      where: { username: req.params.username },
+      where: { username },
     });
 
     if (user) {
@@ -92,6 +93,24 @@ export const getUserByUsername: controllerFunction = async (req, res, next) => {
         },
       });
     }
+  } catch (e) {
+    next(createError(500));
+  }
+};
+
+export const createUser: controllerFunction = async (req, res, next) => {
+
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  const user = {
+    name: req.body.name,
+    username: req.body.username,
+    password: hashedPassword,
+  };
+
+  const userRepository = getRepository(User);
+  try {
+    await userRepository.insert(user);
+    res.end();
   } catch (e) {
     next(createError(500));
   }
