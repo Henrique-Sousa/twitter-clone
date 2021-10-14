@@ -1,13 +1,17 @@
 import 'reflect-metadata';
 import request from 'supertest';
 import express from 'express';
+import bcrypt from 'bcryptjs';
 import {
   createConnection, getConnection, getRepository,
 } from 'typeorm';
+import passport from 'passport';
 import User from '../entity/User';
 import Tweet from '../entity/Tweet';
 import tweets from '../routes/tweets';
 import options from './mock-database';
+import usersRouter from '../routes/users';
+import '../config/passportConfig';
 
 interface UserResult {
   id: number;
@@ -38,10 +42,22 @@ const user1 = {
   password: 'password',
 };
 
+const user1Hashed = {
+  name: 'Data Science Fact',
+  username: 'DataSciFact',
+  password: bcrypt.hashSync('password', 10),
+};
+
 const user2 = {
   name: 'jack',
   username: 'jack',
   password: '12345678',
+};
+
+const user2Hashed = {
+  name: 'jack',
+  username: 'jack',
+  password: bcrypt.hashSync('12345678', 10),
 };
 
 const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';
@@ -49,9 +65,13 @@ const text2 = 'If hat(theta) is a the MLE of theta, f(hat(theta)) is the MLE of 
 const text3 = 'just setting up my twttr';
 
 const app = express();
+
+app.use(passport.initialize());
+
 app.use(express.json());
 
 app.use('/tweets', tweets);
+app.use('/users', usersRouter);
 
 test('GET tweets', async () => {
   const userRepository = getRepository(User);
@@ -185,20 +205,39 @@ test('GET tweets/12345678901234567890', async () => {
 test('create tweet', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
-  await userRepository.insert(user1);
-  await userRepository.insert(user2);
+  await userRepository.insert(user1Hashed);
+  await userRepository.insert(user2Hashed);
+  const loginResponse = await request(app)
+    .post('/users/login')
+    .set('Content-type', 'application/json')
+    .send(user2);
+  const { token } = loginResponse.body;
   await request(app)
     .post('/tweets/')
     .set('Content-type', 'application/json')
-    .send({ text: text3, authorId: 2 });
+    .set('Authorization', token)
+    .send({ text: text3 });
   const result = await tweetRepository.findOne(1, {
     relations: ['user'],
   });
-  expect(result);
+  expect(result).not.toBe(undefined);
+  expect(result).toHaveProperty('id');
+  expect(result).toHaveProperty('text');
+  expect(result).toHaveProperty('createdAt');
+  expect(result).toHaveProperty('user');
   if (result) {
     expect(result.id).toBe(1);
     expect(result.text).toBe(text3);
     expect(result.user.name).toBe('jack');
     expect(result.user.username).toBe('jack');
   }
+});
+
+test('create tweet user not logged in', async () => {
+  const result = await request(app)
+    .post('/tweets/')
+    .set('Content-type', 'application/json')
+    .send({ text: text3 })
+    .expect(401);
+  expect(result.text).toBe('Unauthorized');
 });

@@ -66,19 +66,22 @@ export const getTweetById: controllerFunction = async (req, res, next) => {
 
 export const createTweet: controllerFunction = async (req, res, next) => {
 
-  let user: User | undefined;
+  let userOnDatabase: User | undefined;
 
   try {
     const userRepository = getRepository(User);
     const tweetRepository = getRepository(Tweet);
 
-    user = await userRepository.findOne({
-      where: { id: req.body.authorId },
-    });
+    if (req.user) {
+      const loggedUser = req.user as User;
+      userOnDatabase = await userRepository.findOne({
+        where: { id: loggedUser.id },
+      });
+    }
 
-    if (user) {
+    if (userOnDatabase) {
       const tweet = {
-        user,
+        user: userOnDatabase,
         text: req.body.text,
       };
       await tweetRepository.insert(tweet);

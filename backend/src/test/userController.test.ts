@@ -4,6 +4,7 @@ import express from 'express';
 import {
   createConnection, getConnection, getRepository,
 } from 'typeorm';
+import bcrypt from 'bcryptjs';
 import { Buffer } from 'buffer';
 import User from '../entity/User';
 import usersRouter from '../routes/users';
@@ -33,8 +34,20 @@ const user2 = {
 const deletedUser = {
   name: 'jack',
   username: 'jack',
-  password: 'password',
+  password: bcrypt.hashSync('password', 10),
   deletedAt: new Date(Date.now()),
+};
+
+const user1Hashed = {
+  name: 'Barack Obama',
+  username: 'BarackObama',
+  password: bcrypt.hashSync('password', 10),
+};
+
+const user2Hashed = {
+  name: 'Justin Bieber',
+  username: 'justinbieber',
+  password: bcrypt.hashSync('12345678', 10),
 };
 
 const app = express();
@@ -229,10 +242,8 @@ test('create user', async () => {
 });
 
 test('user login', async () => {
-  await request(app)
-    .post('/users/')
-    .set('Content-type', 'application/json')
-    .send(user1);
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1Hashed);
   const result = await request(app)
     .post('/users/login')
     .set('Content-type', 'application/json')
@@ -254,10 +265,8 @@ test('user login', async () => {
 });
 
 test('user login non existent username', async () => {
-  await request(app)
-    .post('/users/')
-    .set('Content-type', 'application/json')
-    .send(user1);
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1Hashed);
   const wrongUser = {
     name: 'Barack Obama',
     username: 'BarackObam',
@@ -276,10 +285,8 @@ test('user login non existent username', async () => {
 });
 
 test('user login with wrong password', async () => {
-  await request(app)
-    .post('/users/')
-    .set('Content-type', 'application/json')
-    .send(user1);
+  const userRepository = getRepository(User);
+  await userRepository.insert(user1Hashed);
   const wrongPassUser = {
     name: 'Barack Obama',
     username: 'BarackObama',

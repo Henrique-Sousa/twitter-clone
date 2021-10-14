@@ -4,6 +4,7 @@ import {
   ConnectionOptions,
   getRepository,
 } from 'typeorm';
+import bcrypt from 'bcryptjs';
 import * as dotenv from 'dotenv';
 import User from '../src/entity/User';
 import Tweet from '../src/entity/Tweet';
@@ -25,11 +26,13 @@ const options: ConnectionOptions = {
 const user1 = {
   name: 'Data Science Fact',
   username: 'DataSciFact',
+  password: bcrypt.hashSync('password', 10),
 };
 
 const user2 = {
   name: 'jack',
   username: 'jack',
+  password: bcrypt.hashSync('12345678', 10),
 };
 
 const text1 = 'The kinds of people who respond to surveys are different from the kinds of people who do not.';
