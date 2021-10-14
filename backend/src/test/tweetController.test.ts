@@ -99,31 +99,6 @@ test('GET tweets', async () => {
   expect(element2.user.username).toBe('DataSciFact');
 });
 
-test('GET tweets with a (soft) deleted entry', async () => {
-  const userRepository = getRepository(User);
-  const tweetRepository = getRepository(Tweet);
-  await userRepository.insert(user1);
-  await userRepository.insert(user2);
-  await tweetRepository.insert({
-    user: user1,
-    text: text1,
-  });
-  await tweetRepository.insert({
-    user: user1,
-    text: text2,
-    deletedAt: new Date(Date.now()),
-  });
-  await tweetRepository.insert({
-    user: user2,
-    text: text3,
-  });
-  const result = await request(app)
-    .get('/tweets/')
-    .expect('Content-Type', /json/)
-    .expect(200);
-  expect(result.body.length).toBe(2);
-});
-
 test('GET tweets/:id', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
@@ -142,29 +117,7 @@ test('GET tweets/:id', async () => {
   expect(result.body.text).toBe(text3);
 });
 
-test('GET tweets/:id soft deleted', async () => {
-  const userRepository = getRepository(User);
-  const tweetRepository = getRepository(Tweet);
-  await userRepository.insert(user1);
-  await tweetRepository.insert({
-    user: user1,
-    text: text1,
-    deletedAt: new Date(Date.now()),
-  });
-  const result = await request(app)
-    .get('/tweets/1')
-    .expect(200)
-    .expect('Content-Type', /json/);
-  expect(result.body).toHaveProperty('error');
-  const { error } = result.body;
-  expect(error.title).toBe('Not Found Error');
-  expect(error.detail).toBe('Could not find tweet with id: [1].');
-  expect(error.resource_type).toBe('tweet');
-  expect(error.resource_id).toBe('1');
-  expect(error.parameter).toBe('id');
-});
-
-test('GET tweets/3.4 soft deleted', async () => {
+test('GET tweets/3.4', async () => {
   const userRepository = getRepository(User);
   const tweetRepository = getRepository(Tweet);
   await userRepository.insert(user1);

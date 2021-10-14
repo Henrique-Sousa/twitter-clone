@@ -31,13 +31,6 @@ const user2 = {
   password: '12345678',
 };
 
-const deletedUser = {
-  name: 'jack',
-  username: 'jack',
-  password: bcrypt.hashSync('password', 10),
-  deletedAt: new Date(Date.now()),
-};
-
 const user1Hashed = {
   name: 'Barack Obama',
   username: 'BarackObama',
@@ -71,18 +64,6 @@ test('GET users', async () => {
   expect(result.body[1].name).toBe('Justin Bieber');
   expect(result.body[0].username).toBe('BarackObama');
   expect(result.body[1].username).toBe('justinbieber');
-});
-
-test('GET users with a (soft) deleted entry', async () => {
-  const userRepository = getRepository(User);
-  await userRepository.insert(user1);
-  await userRepository.insert(user2);
-  await userRepository.insert(deletedUser);
-  const result = await request(app)
-    .get('/users')
-    .expect('Content-Type', /json/)
-    .expect(200);
-  expect(result.body.length).toBe(2);
 });
 
 test('GET users/:id', async () => {
@@ -119,7 +100,6 @@ test('GET users/1.2', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users/1.2')
     .expect('Content-Type', /json/)
@@ -135,7 +115,6 @@ test('GET users/1a', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users/1a')
     .expect('Content-Type', /json/)
@@ -151,7 +130,6 @@ test('GET users/12345678901234567890', async () => {
   const userRepository = getRepository(User);
   await userRepository.insert(user1);
   await userRepository.insert(user2);
-  await userRepository.insert(deletedUser);
   const result = await request(app)
     .get('/users/12345678901234567890')
     .expect('Content-Type', /json/)

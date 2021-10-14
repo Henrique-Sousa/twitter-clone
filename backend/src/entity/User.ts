@@ -1,6 +1,6 @@
 import {
   Entity, PrimaryGeneratedColumn, Column,
-  OneToMany, CreateDateColumn, DeleteDateColumn,
+  OneToMany, CreateDateColumn,
 } from 'typeorm';
 import Tweet from './Tweet';
 
@@ -23,7 +23,4 @@ export default class User {
 
   @CreateDateColumn()
   createdAt!: Date;
-
-  @DeleteDateColumn({ select: false })
-  deletedAt?: Date;
 }

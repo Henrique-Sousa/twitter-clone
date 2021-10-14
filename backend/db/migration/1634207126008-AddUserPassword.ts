@@ -15,5 +15,4 @@ export default class AddUserPassword1634207126008 implements MigrationInterface 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropColumn('user', 'password');
   }
-
 }
