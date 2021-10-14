@@ -2,19 +2,30 @@
 
 ## Instructions to run locally
 
-1. create a `.env` file based on `.env.sample` with your database credentials
-1. `NODE_ENV` must be `production`
-1. npm i
-1. npm run build
-1. npm start
+create a `.env` file based on `.env.sample` with your database credentials. \
+`NODE_ENV` must be `production`
+```bash
+# generate jwt keys
+npm run keys
+# install dependencies
+npm i
+# build the backend
+npm run build
+# start the backend 
+npm start
+```
 
 ## Instructions to run locally with docker and docker-compose
 
-1. create a `.env` file based on `.env.sample`
-1. `NODE_ENV` must be `production`
-1. `POSTGRES_HOST` must be `db`
-1. the remaining variables can have any value
-1. npm i
-1. docker-compose up
-1. docker-compose down or ctrl-c
-1. docker-compose up (again)
+create a `.env` file based on `.env.sample` \
+`NODE_ENV` must be `production` \
+`POSTGRES_HOST` must be `db` \
+the remaining variables can have any value
+```bash
+# execute docker compose first to create the database 
+docker-compose up
+# wait until database system is ready to accept connections and:
+docker-compose down
+# run it again to start the project
+docker-compose up
+```

@@ -4,3 +4,4 @@ docker-data
 .env
 build
 .docker_temp*
+*.pem

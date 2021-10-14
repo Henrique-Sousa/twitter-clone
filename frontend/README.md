@@ -1,6 +1,11 @@
 # Twitter Clone Front End
 
 ## Instructions to run locally
-1. npm i
-1. npm run build
-1. serve build
+```bash
+# install dependencies
+$ npm i
+# build the frontend 
+$ npm run build
+# start the frontend 
+$ serve build
+```

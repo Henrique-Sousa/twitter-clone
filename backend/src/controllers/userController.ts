@@ -1,6 +1,8 @@
 import createError from 'http-errors';
 import { getRepository } from 'typeorm';
 import bcrypt from 'bcryptjs';
+import jsonwebtoken from 'jsonwebtoken';
+import fs from 'fs';
 import User from '../entity/User';
 import { controllerFunction } from './functions';
 
@@ -111,6 +113,63 @@ export const createUser: controllerFunction = async (req, res, next) => {
   try {
     await userRepository.insert(user);
     res.end();
+  } catch (e) {
+    next(createError(500));
+  }
+};
+
+export const logUserIn: controllerFunction = async (req, res, next) => {
+
+  let user: User | undefined;
+  const { username, password } = req.body;
+
+  try {
+    const userRepository = getRepository(User);
+    user = await userRepository.findOne({
+      select: ['id', 'username', 'password'],
+      where: { username },
+    });
+
+    if (!user) {
+      res.status(401);
+      res.send({
+        success: false,
+        error: {
+          title: 'Not Found Error',
+          detail: `Could not find user with username: [${username}].`,
+        },
+      });
+    } else {
+      const result = await bcrypt.compare(password, user.password);
+
+      if (result) {
+        const { id } = user;
+        const expiresIn = '1d';
+
+        const payload = {
+          sub: id,
+          iat: Date.now(),
+        };
+
+        const PRIV_KEY = fs.readFileSync(`${__dirname}/../../jwt_RS256_key_pub.pem`, 'utf8');
+        const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn, algorithm: 'RS256' });
+
+        res.send({
+          success: true,
+          token: `Bearer ${signedToken}`,
+          expires: expiresIn,
+        });
+      }
+
+      res.status(401);
+      res.send({
+        success: false,
+        error: {
+          title: 'Wrong Password Error',
+          detail: 'You entered the wrong password',
+        },
+      });
+    }
   } catch (e) {
     next(createError(500));
   }

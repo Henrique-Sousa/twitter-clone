@@ -4,6 +4,7 @@ import express from 'express';
 import {
   createConnection, getConnection, getRepository,
 } from 'typeorm';
+import { Buffer } from 'buffer';
 import User from '../entity/User';
 import usersRouter from '../routes/users';
 import options from './mock-database';
@@ -49,6 +50,8 @@ test('GET users', async () => {
     .get('/users')
     .expect('Content-Type', /json/)
     .expect(200);
+  expect(result.body[0]).not.toHaveProperty('password');
+  expect(result.body[1]).not.toHaveProperty('password');
   expect(result.body[0].id).toBe(1);
   expect(result.body[1].id).toBe(2);
   expect(result.body[0].name).toBe('Barack Obama');
@@ -76,6 +79,7 @@ test('GET users/:id', async () => {
     .get('/users/1')
     .expect('Content-Type', /json/)
     .expect(200);
+  expect(result.body).not.toHaveProperty('password');
   expect(result.body.id).toBe(1);
   expect(result.body.name).toBe('Barack Obama');
   expect(result.body.username).toBe('BarackObama');
@@ -153,6 +157,7 @@ test('GET users/by/username/:username', async () => {
     .get('/users/by/username/BarackObama')
     .expect('Content-Type', /json/)
     .expect(200);
+  expect(result.body).not.toHaveProperty('password');
   expect(result.body.id).toBe(1);
   expect(result.body.name).toBe('Barack Obama');
   expect(result.body.username).toBe('BarackObama');
@@ -221,4 +226,73 @@ test('create user', async () => {
     expect(result.name).toBe('Barack Obama');
     expect(result.username).toBe('BarackObama');
   }
+});
+
+test('user login', async () => {
+  await request(app)
+    .post('/users/')
+    .set('Content-type', 'application/json')
+    .send(user1);
+  const result = await request(app)
+    .post('/users/login')
+    .set('Content-type', 'application/json')
+    .send(user1)
+    .expect(200);
+  expect(result.body.success).toBe(true);
+  expect(result.body.expires).toBe('1d');
+  const token: Array<string> = result.body.token.split(' ');
+  expect(token[0]).toBe('Bearer');
+  const header: string = token[1].split('.')[0];
+  const payload: string = token[1].split('.')[1];
+  const headerObject = JSON.parse(Buffer.from(header, 'base64').toString('ascii'));
+  const payloadObject = JSON.parse(Buffer.from(payload, 'base64').toString('ascii'));
+  expect(headerObject.alg).toBe('RS256');
+  expect(headerObject.typ).toBe('JWT');
+  expect(payloadObject.sub).toBe(1);
+  expect(payloadObject).toHaveProperty('iat');
+  expect(payloadObject).toHaveProperty('exp');
+});
+
+test('user login non existent username', async () => {
+  await request(app)
+    .post('/users/')
+    .set('Content-type', 'application/json')
+    .send(user1);
+  const wrongUser = {
+    name: 'Barack Obama',
+    username: 'BarackObam',
+    password: 'password',
+  };
+  const result = await request(app)
+    .post('/users/login')
+    .set('Content-type', 'application/json')
+    .send(wrongUser)
+    .expect(401);
+  expect(result.body.success).toBe(false);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Not Found Error');
+  expect(error.detail).toBe('Could not find user with username: [BarackObam].');
+});
+
+test('user login with wrong password', async () => {
+  await request(app)
+    .post('/users/')
+    .set('Content-type', 'application/json')
+    .send(user1);
+  const wrongPassUser = {
+    name: 'Barack Obama',
+    username: 'BarackObama',
+    password: 'pssword',
+  };
+  const result = await request(app)
+    .post('/users/login')
+    .set('Content-type', 'application/json')
+    .send(wrongPassUser)
+    .expect(401);
+  expect(result.body.success).toBe(false);
+  expect(result.body).toHaveProperty('error');
+  const { error } = result.body;
+  expect(error.title).toBe('Wrong Password Error');
+  expect(error.detail).toBe('You entered the wrong password');
 });
