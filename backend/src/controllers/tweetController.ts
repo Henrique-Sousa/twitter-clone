@@ -66,22 +66,12 @@ export const getTweetById: controllerFunction = async (req, res, next) => {
 
 export const createTweet: controllerFunction = async (req, res, next) => {
 
-  let userOnDatabase: User | undefined;
-
   try {
-    const userRepository = getRepository(User);
     const tweetRepository = getRepository(Tweet);
 
     if (req.user) {
-      const loggedUser = req.user as User;
-      userOnDatabase = await userRepository.findOne({
-        where: { id: loggedUser.id },
-      });
-    }
-
-    if (userOnDatabase) {
       const tweet = {
-        user: userOnDatabase,
+        user: req.user,
         text: req.body.text,
       };
       await tweetRepository.insert(tweet);
@@ -92,13 +82,27 @@ export const createTweet: controllerFunction = async (req, res, next) => {
   }
 };
 
-// const destroy = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//   try {
-//     await Tweet.destroy({
-//       where: { id: req.params.id },
-//     });
-//     res.end();
-//   } catch (e) {
-//     next(createError(500));
-//   }
-// };
+export const deleteTweet: controllerFunction = async (req, res, next) => {
+
+  let tweet: Tweet | undefined;
+  const tweetId = req.params.id;
+
+  try {
+    const tweetRepository = getRepository(Tweet);
+    tweet = await tweetRepository.findOne(tweetId, {
+      relations: ['user'],
+    });
+
+    if (req.user && tweet) {
+      const userOnDatabase = req.user as User;
+      if (tweet.user.id === userOnDatabase.id) {
+        await tweetRepository.delete(tweetId);
+        res.end();
+      } else {
+        res.send('Unauthorized');
+      }
+    }
+  } catch (e) {
+    next(createError(500));
+  }
+};

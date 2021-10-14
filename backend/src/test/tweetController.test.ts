@@ -241,3 +241,76 @@ test('create tweet user not logged in', async () => {
     .expect(401);
   expect(result.text).toBe('Unauthorized');
 });
+
+test('delete tweet', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1Hashed);
+  await userRepository.insert(user2Hashed);
+  await tweetRepository.insert({
+    user: user1Hashed,
+    text: text1,
+  });
+  await tweetRepository.insert({
+    user: user2Hashed,
+    text: text3,
+  });
+  const loginResponse = await request(app)
+    .post('/users/login')
+    .set('Content-type', 'application/json')
+    .send(user1);
+
+  const { token } = loginResponse.body;
+
+  await request(app)
+    .delete('/tweets/1')
+    .set('Authorization', token);
+
+  const result = await tweetRepository.find({
+    relations: ['user'],
+  });
+
+  expect(result.length).toBe(1);
+  expect(result[0].id).toBe(2);
+  expect(result[0].text).toBe(text3);
+  expect(result[0]).toHaveProperty('createdAt');
+  expect(result[0].user.name).toBe('jack');
+  expect(result[0].user.username).toBe('jack');
+});
+
+it('should not delete tweet of wrong user', async () => {
+  const userRepository = getRepository(User);
+  const tweetRepository = getRepository(Tweet);
+  await userRepository.insert(user1Hashed);
+  await userRepository.insert(user2Hashed);
+  await tweetRepository.insert({
+    user: user1Hashed,
+    text: text1,
+  });
+  await tweetRepository.insert({
+    user: user2Hashed,
+    text: text3,
+  });
+  const loginResponse = await request(app)
+    .post('/users/login')
+    .set('Content-type', 'application/json')
+    .send(user1);
+
+  const { token } = loginResponse.body;
+
+  const response = await request(app)
+    .delete('/tweets/2')
+    .set('Authorization', token);
+  expect(response.text).toBe('Unauthorized');
+
+  const result = await tweetRepository.find({
+    relations: ['user'],
+  });
+
+  expect(result.length).toBe(2);
+  expect(result[1].id).toBe(2);
+  expect(result[1].text).toBe(text3);
+  expect(result[1]).toHaveProperty('createdAt');
+  expect(result[1].user.name).toBe('jack');
+  expect(result[1].user.username).toBe('jack');
+});

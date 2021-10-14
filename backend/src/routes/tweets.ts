@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import {
-  getAllTweets, getTweetById, createTweet,
+  getAllTweets, getTweetById, createTweet, deleteTweet,
 } from '../controllers/tweetController';
 
 const tweets = Router();
@@ -9,7 +9,6 @@ const tweets = Router();
 tweets.get('/', getAllTweets);
 tweets.get('/:id', getTweetById);
 tweets.post('/', passport.authenticate('jwt', { session: false }), createTweet);
-
-// tweets.delete('/:tweet_id', tweetController.destroy);
+tweets.delete('/:id', passport.authenticate('jwt', { session: false }), deleteTweet);
 
 export default tweets;
