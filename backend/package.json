@@ -13,6 +13,8 @@
     "lint": "eslint \"**/*.{js,ts}\"",
     "seed": "ts-node-dev db/seed.ts",
     "drop": "ts-node-dev db/drop.ts",
+    "migration": "typeorm migration:run",
+    "revert": "typeorm migration:revert",
     "keys": "ts-node-dev generateKeyPair.ts"
   },
   "author": "",

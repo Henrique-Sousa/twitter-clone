@@ -20,5 +20,6 @@ jobs:
         run: |
           npm ci
           npm run lint
+          npm run keys
           npm test
           npm run build
