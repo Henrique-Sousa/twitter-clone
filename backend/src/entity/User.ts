@@ -9,10 +9,10 @@ export default class User {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ unique: true, length: 50, nullable: false })
+  @Column({ length: 50, nullable: false })
   name!: string;
 
-  @Column({ length: 15, nullable: false })
+  @Column({ unique: true, length: 15, nullable: false })
   username!: string;
 
   @Column({ length: 128, nullable: false, select: false })

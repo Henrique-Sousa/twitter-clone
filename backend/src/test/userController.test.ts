@@ -37,12 +37,6 @@ const user1Hashed = {
   password: bcrypt.hashSync('password', 10),
 };
 
-const user2Hashed = {
-  name: 'Justin Bieber',
-  username: 'justinbieber',
-  password: bcrypt.hashSync('12345678', 10),
-};
-
 const app = express();
 app.use(express.json());
 
@@ -217,6 +211,25 @@ test('create user', async () => {
     expect(result.name).toBe('Barack Obama');
     expect(result.username).toBe('BarackObama');
   }
+});
+
+it('should not create user with duplicate username', async () => {
+  await request(app)
+    .post('/users/')
+    .set('Content-type', 'application/json')
+    .send(user1Hashed);
+  const secondResponse = await request(app)
+    .post('/users/')
+    .set('Content-type', 'application/json')
+    .send(user1Hashed)
+    .expect(403);
+  expect(secondResponse.body).toHaveProperty('error');
+  const { error } = secondResponse.body;
+  expect(error.title).toBe('Already Exists');
+  expect(error.detail).toBe('A user with username: [BarackObama] already exists.');
+  expect(error.resource_type).toBe('user');
+  expect(error.resource_id).toBe('BarackObama');
+  expect(error.parameter).toBe('username');
 });
 
 test('user login', async () => {

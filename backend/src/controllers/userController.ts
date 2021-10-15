@@ -102,6 +102,25 @@ export const getUserByUsername: controllerFunction = async (req, res, next) => {
 
 export const createUser: controllerFunction = async (req, res, next) => {
 
+  const userRepository = getRepository(User);
+
+  const userOnDatabase: User | undefined = await userRepository.findOne({
+    where: { username: req.body.username },
+  });
+
+  if (userOnDatabase) {
+    res.status(403);
+    res.send({
+      error: {
+        title: 'Already Exists',
+        detail: `A user with username: [${req.body.username}] already exists.`,
+        resource_type: 'user',
+        resource_id: req.body.username,
+        parameter: 'username',
+      },
+    });
+  }
+
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const user = {
     name: req.body.name,
@@ -109,7 +128,6 @@ export const createUser: controllerFunction = async (req, res, next) => {
     password: hashedPassword,
   };
 
-  const userRepository = getRepository(User);
   try {
     await userRepository.insert(user);
     res.end();
