@@ -6,14 +6,19 @@ import fs from 'fs';
 import User from '../entity/User';
 import { controllerFunction } from './functions';
 
-export const getAllUsers: controllerFunction = async (_req, res, next) => {
-
-  let users: Array<User>;
+export const getAllUsers: controllerFunction = async (req, res, next) => {
 
   try {
     const userRepository = getRepository(User);
-    users = await userRepository.find();
-    res.send(users);
+    if (req.query.skip) {
+      const [users, _]: [Array<User>, number] = await userRepository.findAndCount({
+        skip: Number.parseInt(req.query.skip as string, 10),
+        take: 10,
+      });
+      res.send(users);
+    } else {
+      res.send('The `skip` query parameter can not be empty');
+    }
   } catch (e) {
     next(createError(500));
   }
