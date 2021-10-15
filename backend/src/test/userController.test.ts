@@ -47,7 +47,7 @@ test('GET users', async () => {
   await userRepository.insert(user1);
   await userRepository.insert(user2);
   const result = await request(app)
-    .get('/users')
+    .get('/users?skip=0')
     .expect('Content-Type', /json/)
     .expect(200);
   expect(result.body[0]).not.toHaveProperty('password');
