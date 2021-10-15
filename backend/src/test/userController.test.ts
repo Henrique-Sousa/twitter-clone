@@ -85,8 +85,8 @@ test('GET users/:id non existent', async () => {
   const { error } = result.body;
   expect(error.title).toBe('Not Found Error');
   expect(error.detail).toBe('Could not find user with id: [4].');
-  expect(error.resource_type).toBe('user');
-  expect(error.resource_id).toBe('4');
+  expect(error.resourceType).toBe('user');
+  expect(error.resourceId).toBe('4');
   expect(error.parameter).toBe('id');
 });
 
@@ -159,8 +159,8 @@ test('GET users/by/username/:username non existent', async () => {
   const { error } = result.body;
   expect(error.title).toBe('Not Found Error');
   expect(error.detail).toBe('Could not find user with username: [jack].');
-  expect(error.resource_type).toBe('user');
-  expect(error.resource_id).toBe('jack');
+  expect(error.resourceType).toBe('user');
+  expect(error.resourceId).toBe('jack');
   expect(error.parameter).toBe('username');
 });
 
@@ -227,8 +227,8 @@ it('should not create user with duplicate username', async () => {
   const { error } = secondResponse.body;
   expect(error.title).toBe('Already Exists');
   expect(error.detail).toBe('A user with username: [BarackObama] already exists.');
-  expect(error.resource_type).toBe('user');
-  expect(error.resource_id).toBe('BarackObama');
+  expect(error.resourceType).toBe('user');
+  expect(error.resourceId).toBe('BarackObama');
   expect(error.parameter).toBe('username');
 });
 

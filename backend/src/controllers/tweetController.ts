@@ -52,8 +52,8 @@ export const getTweetById: controllerFunction = async (req, res, next) => {
         error: {
           title: 'Not Found Error',
           detail: `Could not find tweet with id: [${id}].`,
-          resource_type: 'tweet',
-          resource_id: id,
+          resourceType: 'tweet',
+          resourceId: id,
           parameter: 'id',
         },
       });

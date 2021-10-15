@@ -52,8 +52,8 @@ export const getUserById: controllerFunction = async (req, res, next) => {
         error: {
           title: 'Not Found Error',
           detail: `Could not find user with id: [${id}].`,
-          resource_type: 'user',
-          resource_id: id,
+          resourceType: 'user',
+          resourceId: id,
           parameter: 'id',
         },
       });
@@ -94,8 +94,8 @@ export const getUserByUsername: controllerFunction = async (req, res, next) => {
         error: {
           title: 'Not Found Error',
           detail: `Could not find user with username: [${username}].`,
-          resource_type: 'user',
-          resource_id: username,
+          resourceType: 'user',
+          resourceId: username,
           parameter: 'username',
         },
       });
@@ -119,8 +119,8 @@ export const createUser: controllerFunction = async (req, res, next) => {
       error: {
         title: 'Already Exists',
         detail: `A user with username: [${req.body.username}] already exists.`,
-        resource_type: 'user',
-        resource_id: req.body.username,
+        resourceType: 'user',
+        resourceId: req.body.username,
         parameter: 'username',
       },
     });
