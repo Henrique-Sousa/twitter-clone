@@ -165,25 +165,26 @@ test('create tweet', async () => {
     .set('Content-type', 'application/json')
     .send(user2);
   const { token } = loginResponse.body;
-  await request(app)
+  const result = await request(app)
     .post('/tweets/')
     .set('Content-type', 'application/json')
     .set('Authorization', token)
     .send({ text: text3 });
-  const result = await tweetRepository.findOne(1, {
+  const dbResult = await tweetRepository.findOne(1, {
     relations: ['user'],
   });
-  expect(result).not.toBe(undefined);
-  expect(result).toHaveProperty('id');
-  expect(result).toHaveProperty('text');
-  expect(result).toHaveProperty('createdAt');
-  expect(result).toHaveProperty('user');
-  if (result) {
-    expect(result.id).toBe(1);
-    expect(result.text).toBe(text3);
-    expect(result.user.name).toBe('jack');
-    expect(result.user.username).toBe('jack');
+  expect(dbResult).not.toBe(undefined);
+  expect(dbResult).toHaveProperty('id');
+  expect(dbResult).toHaveProperty('text');
+  expect(dbResult).toHaveProperty('createdAt');
+  expect(dbResult).toHaveProperty('user');
+  if (dbResult) {
+    expect(dbResult.id).toBe(1);
+    expect(dbResult.text).toBe(text3);
+    expect(dbResult.user.name).toBe('jack');
+    expect(dbResult.user.username).toBe('jack');
   }
+  expect(JSON.stringify(result) === JSON.stringify(dbResult));
 });
 
 test('create tweet user not logged in', async () => {

@@ -74,8 +74,14 @@ export const createTweet: controllerFunction = async (req, res, next) => {
         user: req.user,
         text: req.body.text,
       };
-      await tweetRepository.insert(tweet);
-      res.end();
+      const result = await tweetRepository.insert(tweet);
+      const newTweet: Tweet = {
+        id: result.generatedMaps[0].id,
+        text: req.body.text,
+        createdAt: result.generatedMaps[0].createdAt,
+        user: req.user as User,
+      };
+      res.send(newTweet);
     }
   } catch (e) {
     next(createError(500));

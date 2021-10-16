@@ -12,13 +12,13 @@ const Home: FC = () => {
     localStorage.getItem('token')
       ? (
         <>
+          <Link to="/logout">Log out</Link>
           <Navbar />
           <Feed apiURL={apiURL} />
           <Sidebar />
-          <Link to="/logout">Log out</Link>
         </>
       )
-      : <Redirect to="/login" />
+      : <Redirect to="/" />
   );
 };
 

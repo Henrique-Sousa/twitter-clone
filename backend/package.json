@@ -8,7 +8,7 @@
     "start": "node build/src/app.js",
     "dev": "ts-node-dev src/app.ts",
     "build": "tsc && cp *.pem ./build",
-    "clean": "rm build -r",
+    "clean": "rm build -rf",
     "test": "jest",
     "lint": "eslint \"**/*.{js,ts}\"",
     "seed": "ts-node-dev db/seed.ts",

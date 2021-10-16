@@ -5,7 +5,7 @@ const Logout: FC = () => {
 
   localStorage.clear();
 
-  return <Redirect to="/login" />;
+  return <Redirect to="/" />;
 
 };
 
