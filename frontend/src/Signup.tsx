@@ -64,7 +64,6 @@ const Signup: FC = () => {
               placeholder="Name"
               minLength={1}
               maxLength={50}
-              pattern="[A-Za-z0-9_]{1,50}"
               required
             />
             <input
