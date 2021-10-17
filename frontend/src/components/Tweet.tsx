@@ -14,6 +14,7 @@ interface Props {
   date: Date;
   text: string;
   loggedUser?: UserResult;
+  handleStatusUpdate: (tweetId: number) => void;
 }
 
 const Tweet: FC<Props> = ({
@@ -23,6 +24,7 @@ const Tweet: FC<Props> = ({
   date,
   text,
   loggedUser,
+  handleStatusUpdate,
 }) => {
 
   const apiURL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3001';
@@ -39,6 +41,7 @@ const Tweet: FC<Props> = ({
             Authorization: token,
           },
         });
+        handleStatusUpdate(tweetId);
       } catch (error) {
         // ...
       }

@@ -15,6 +15,12 @@ const Feed: FC<Props> = ({ apiURL, loggedUser }: Props) => {
 
   const [tweets, setTweets] = useState<Array<TweetObject>>([]);
 
+  const onDeleteTweet = (tweetId: number): void => {
+    setTweets((prevState) => (
+      prevState.filter((tweet) => tweet.id !== tweetId)
+    ));
+  };
+
   useEffect(() => {
     (async () => {
       try {
@@ -66,6 +72,7 @@ const Feed: FC<Props> = ({ apiURL, loggedUser }: Props) => {
           date={tweet.createdAt}
           text={tweet.text}
           loggedUser={loggedUser}
+          handleStatusUpdate={onDeleteTweet}
         />
       ))}
     </main>
