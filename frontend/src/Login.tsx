@@ -1,12 +1,10 @@
 import { FC, useState, FormEvent } from 'react';
 import { Redirect } from 'react-router-dom';
-import { UserResult } from './lib/ApiResult';
 
 const Login: FC = () => {
 
   const apiURL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3001';
   const [redirect, setRedirect] = useState(false);
-  const [loggedUser, setLoggedUser] = useState<UserResult>();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,7 +30,7 @@ const Login: FC = () => {
         const result = await response.json();
         if (!('error' in result)) {
           localStorage.setItem('token', result.token);
-          setLoggedUser(result.user);
+          localStorage.setItem('loggedUser', JSON.stringify(result.user));
           setRedirect(true);
         }
 
@@ -45,11 +43,7 @@ const Login: FC = () => {
   return (
     redirect
       ? (
-        <Redirect to={{
-          pathname: '/home',
-          state: { loggedUser },
-        }}
-        />
+        <Redirect to="/home" />
       )
       : (
         <div>
