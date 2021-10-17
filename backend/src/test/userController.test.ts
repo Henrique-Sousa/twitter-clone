@@ -253,6 +253,9 @@ test('user login', async () => {
   expect(payloadObject.sub).toBe(1);
   expect(payloadObject).toHaveProperty('iat');
   expect(payloadObject).toHaveProperty('exp');
+  expect(result.body).toHaveProperty('user');
+  expect(result.body.user.username).toBe('BarackObama');
+  expect(result.body.user).not.toHaveProperty('password');
 });
 
 test('user login non existent username', async () => {

@@ -184,7 +184,7 @@ test('create tweet', async () => {
     expect(dbResult.user.name).toBe('jack');
     expect(dbResult.user.username).toBe('jack');
   }
-  expect(JSON.stringify(result) === JSON.stringify(dbResult));
+  expect(JSON.stringify(result.body)).toBe(JSON.stringify(dbResult));
 });
 
 test('create tweet user not logged in', async () => {

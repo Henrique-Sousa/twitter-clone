@@ -6,6 +6,13 @@ import fs from 'fs';
 import User from '../entity/User';
 import { controllerFunction } from './functions';
 
+export interface UserResult {
+  id: number;
+  name: string
+  username: string;
+  createdAt: string;
+}
+
 export const getAllUsers: controllerFunction = async (req, res, next) => {
 
   try {
@@ -149,7 +156,7 @@ export const logUserIn: controllerFunction = async (req, res, next) => {
   try {
     const userRepository = getRepository(User);
     user = await userRepository.findOne({
-      select: ['id', 'username', 'password'],
+      select: ['id', 'name', 'username', 'createdAt', 'password'],
       where: { username },
     });
 
@@ -177,10 +184,18 @@ export const logUserIn: controllerFunction = async (req, res, next) => {
         const PRIV_KEY = fs.readFileSync(`${__dirname}/../../jwt_RS256_key_pub.pem`, 'utf8');
         const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn, algorithm: 'RS256' });
 
+        const userToSend: UserResult = {
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          createdAt: user.createdAt.toString(),
+        };
+
         res.send({
           success: true,
           token: `Bearer ${signedToken}`,
           expires: expiresIn,
+          user: userToSend,
         });
       }
 
