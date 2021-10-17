@@ -24,18 +24,18 @@
   margin-right: 15px;
 }
 
-textarea {
+.whats-happening textarea {
   resize: none;
   width: 100%;
   border: none;
   margin-top: 20px;
 }
 
-textarea:focus {
+.whats-happening textarea:focus {
   outline: none;
 }
 
-button {
+.whats-happening button {
   background-color: var(--primary-color);
   color: white;
   font-size: 15px;
@@ -46,6 +46,6 @@ button {
   margin: 7px;
 }
 
-button:hover {
+.whats-happening button:hover {
   cursor: pointer;
 }

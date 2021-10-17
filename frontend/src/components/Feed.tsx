@@ -2,15 +2,16 @@ import { FC, useState, useEffect } from 'react';
 import WhatsHappening from './WhatsHappening';
 import Tweet from './Tweet';
 import './Feed.css';
-import { TweetResult } from '../lib/ApiResult';
+import { TweetResult, UserResult } from '../lib/ApiResult';
 import { TweetObject } from './Objects';
 import fetchJSON from '../lib/fetchJSON';
 
 interface Props {
   apiURL: string;
+  loggedUser?: UserResult;
 }
 
-const Feed: FC<Props> = ({ apiURL }: Props) => {
+const Feed: FC<Props> = ({ apiURL, loggedUser }: Props) => {
 
   const [tweets, setTweets] = useState<Array<TweetObject>>([]);
 
@@ -59,14 +60,20 @@ const Feed: FC<Props> = ({ apiURL }: Props) => {
       {tweets.map((tweet: TweetObject) => (
         <Tweet
           key={tweet.id}
+          tweetId={tweet.id}
           name={tweet.user.name}
           username={tweet.user.username}
           date={tweet.createdAt}
           text={tweet.text}
+          loggedUser={loggedUser}
         />
       ))}
     </main>
   );
+};
+
+Feed.defaultProps = {
+  loggedUser: undefined,
 };
 
 export default Feed;
