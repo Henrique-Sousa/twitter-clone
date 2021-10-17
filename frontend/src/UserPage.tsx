@@ -9,7 +9,7 @@ const apiURL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3001';
 
 type Props = RouteComponentProps<{ username: string }>;
 
-const Profile: FC<Props> = ({ match }) => {
+const UserPage: FC<Props> = ({ match }) => {
 
   const [name, setName]: [string, Dispatch<SetStateAction<string>>] = useState<string>('');
   const [username, setUsername]: [string, Dispatch<SetStateAction<string>>] = useState<string>('');
@@ -40,4 +40,4 @@ const Profile: FC<Props> = ({ match }) => {
   );
 };
 
-export default Profile;
+export default UserPage;
