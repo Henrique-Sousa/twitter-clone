@@ -5,8 +5,7 @@
 }
 
 .feed {
-  width: 600px; 
-  margin-left: var(--navbar-width);
+  width: 100%; 
 }
 
 .feed > * {

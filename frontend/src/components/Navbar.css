@@ -1,6 +1,7 @@
 .navbar {
   width: var(--navbar-width);
   position: fixed;
+  display: none;
 }
 
 .navbar div {
