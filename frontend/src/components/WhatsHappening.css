@@ -15,7 +15,8 @@
 .whats-happening form div:last-child {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: flex-end;
 }
 
 .whats-happening .tool-bar svg {

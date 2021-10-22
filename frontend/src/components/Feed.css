@@ -18,7 +18,7 @@
 @media only screen and (min-width: 992px) {
   .feed {
     width: 600px;
-    margin-left: var(--navbar-width);
+    margin-left: 318px; 
   }
 }
 

@@ -1,7 +1,6 @@
 import {
   FC, useState, Dispatch, SetStateAction, FormEvent,
 } from 'react';
-import Toolbar from './Toolbar';
 import Photo from './Photo';
 import './WhatsHappening.css';
 import { TweetObject } from './Objects';
@@ -68,7 +67,6 @@ const WhatsHappening: FC<Props> = ({
           onChange={(e) => setText(e.target.value)}
         />
         <div>
-          <Toolbar />
           <button type="submit"> Tweet </button>
         </div>
       </form>
