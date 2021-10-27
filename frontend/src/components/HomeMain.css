@@ -4,25 +4,25 @@
   --border: 1px solid #eee;
 }
 
-.feed {
+.home__main {
   width: 100%; 
 }
 
 @media only screen and (min-width: 768px) {
-  .feed {
+  .home__main {
     width: 600px;
     margin-left: 130px; 
   }
 }
 
 @media only screen and (min-width: 992px) {
-  .feed {
+  .home__main {
     width: 600px;
     margin-left: 318px; 
   }
 }
 
-.feed > * {
+.home__main > * {
   border: var(--border);
   border-top: none;
 }

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Feed from './components/Feed';
+import HomeMain from './components/HomeMain';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 
@@ -20,7 +20,7 @@ const Home: FC = () => {
       <>
         <Link to="/logout">Log out</Link>
         <Navbar />
-        <Feed
+        <HomeMain
           apiURL={apiURL}
           loggedUser={loggedUser || undefined}
         />
