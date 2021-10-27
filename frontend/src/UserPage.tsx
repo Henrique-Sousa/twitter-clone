@@ -1,25 +1,37 @@
 import {
   FC, useState, useEffect, Dispatch, SetStateAction,
 } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import fetchJSON from './lib/fetchJSON';
 import { UserResult } from './lib/ApiResult';
-
-const apiURL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3001';
+import UserPageMain from './components/UserPageMain';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 
 type Props = RouteComponentProps<{ username: string }>;
 
 const UserPage: FC<Props> = ({ match }) => {
 
-  const [name, setName]: [string, Dispatch<SetStateAction<string>>] = useState<string>('');
-  const [username, setUsername]: [string, Dispatch<SetStateAction<string>>] = useState<string>('');
+  const apiURL: string = process.env.REACT_APP_API_URL || 'http://127.0.0.1:3001';
+
+  const userJson = localStorage.getItem('loggedUser');
+
+  let loggedUser;
+  if (userJson) {
+    loggedUser = JSON.parse(userJson);
+  }
+
+  type MaybeUserResult = UserResult | undefined;
+  type userResultState = [MaybeUserResult, Dispatch<SetStateAction<MaybeUserResult>>];
+  const [user, setUser]: userResultState = useState<MaybeUserResult>(undefined);
 
   useEffect(() => {
     (async () => {
       try {
         const userResult: UserResult = await fetchJSON(`${apiURL}/users/by/username/${match.params.username}`);
-        setName(userResult.name);
-        setUsername(userResult.username);
+        if (!('error' in userResult)) {
+          setUser(userResult);
+        }
       } catch (e) {
         // ...
       }
@@ -27,16 +39,16 @@ const UserPage: FC<Props> = ({ match }) => {
   }, []);
 
   return (
-    <div>
-      <h1>
-        Name:
-        {` ${name}`}
-      </h1>
-      <p>
-        Username:
-        {` ${username}`}
-      </p>
-    </div>
+    <>
+      <Link to="/logout">Log out</Link>
+      <Navbar />
+      <UserPageMain
+        apiURL={apiURL}
+        loggedUser={loggedUser || undefined}
+        user={user}
+      />
+      <Sidebar />
+    </>
   );
 };
 
