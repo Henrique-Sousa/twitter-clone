@@ -4,14 +4,17 @@ import {
 import Photo from './Photo';
 import './WhatsHappening.css';
 import { TweetObject } from './Objects';
+import { UserResult } from '../lib/ApiResult';
 
 interface Props {
   apiURL: string;
+  loggedUser?: UserResult;
   handleStatusUpdate: (tweet: TweetObject) => void;
 }
 
 const WhatsHappening: FC<Props> = ({
   apiURL,
+  loggedUser,
   handleStatusUpdate,
 }) => {
 
@@ -45,6 +48,7 @@ const WhatsHappening: FC<Props> = ({
             name: result.user.name,
             username: result.user.username,
             createdAt: new Date(result.user.createdAt),
+            photoUrl: result.user.photoUrl,
           },
         };
         handleStatusUpdate(tweetObject);
@@ -57,7 +61,7 @@ const WhatsHappening: FC<Props> = ({
 
   return (
     <div className="whats-happening">
-      <Photo />
+      <Photo imageSrc={loggedUser ? loggedUser.photoUrl : ''} />
       <form onSubmit={submit}>
         <textarea
           name="text"
@@ -72,6 +76,10 @@ const WhatsHappening: FC<Props> = ({
       </form>
     </div>
   );
+};
+
+WhatsHappening.defaultProps = {
+  loggedUser: undefined,
 };
 
 export default WhatsHappening;

@@ -1,8 +1,17 @@
+import { FC } from 'react';
 import './Photo.css';
 
-const Photo = () => (
+interface Props {
+  imageSrc: string;
+}
+
+const Photo: FC<Props> = ({ imageSrc }) => (
   <div>
-    <div className="user__photo" />
+    <img
+      className="user__photo"
+      src={imageSrc}
+      alt=""
+    />
   </div>
 );
 

@@ -13,6 +13,7 @@ interface Props {
   username: string;
   date: Date;
   text: string;
+  photoUrl: string;
   loggedUser?: UserResult;
   handleStatusUpdate: (tweetId: number) => void;
 }
@@ -23,6 +24,7 @@ const Tweet: FC<Props> = ({
   username,
   date,
   text,
+  photoUrl,
   loggedUser,
   handleStatusUpdate,
 }) => {
@@ -50,7 +52,7 @@ const Tweet: FC<Props> = ({
 
   return (
     <article className="tweet">
-      <Photo />
+      <Photo imageSrc={photoUrl} />
       <div>
         <Author name={name} username={username} date={date} />
         <Text value={text} />

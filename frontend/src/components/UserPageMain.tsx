@@ -38,6 +38,7 @@ const UserPageMain: FC<Props> = ({ apiURL, user, loggedUser }: Props) => {
               name: tweet.user.name,
               username: tweet.user.username,
               createdAt: new Date(tweet.user.createdAt),
+              photoUrl: tweet.user.photoUrl,
             },
           };
           setTweets((prevState) => (

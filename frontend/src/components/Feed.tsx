@@ -19,6 +19,7 @@ const Feed: FC<Props> = ({ loggedUser, tweets, handleStatusUpdate }: Props) => (
         username={tweet.user.username}
         date={tweet.createdAt}
         text={tweet.text}
+        photoUrl={tweet.user.photoUrl}
         loggedUser={loggedUser}
         handleStatusUpdate={handleStatusUpdate}
       />

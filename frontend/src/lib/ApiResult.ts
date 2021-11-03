@@ -3,6 +3,7 @@ export interface UserResult {
   name: string
   username: string;
   createdAt: string;
+  photoUrl: string;
 }
 
 export interface TweetResult {

@@ -36,6 +36,7 @@ const HomeMain: FC<Props> = ({ apiURL, loggedUser }: Props) => {
               name: tweet.user.name,
               username: tweet.user.username,
               createdAt: new Date(tweet.user.createdAt),
+              photoUrl: tweet.user.photoUrl,
             },
           };
           setTweets((prevState) => (
@@ -54,6 +55,7 @@ const HomeMain: FC<Props> = ({ apiURL, loggedUser }: Props) => {
         <h1 id="home">Home</h1>
       </header>
       <WhatsHappening
+        loggedUser={loggedUser}
         apiURL={apiURL}
         handleStatusUpdate={
           (tweet: TweetObject) => {

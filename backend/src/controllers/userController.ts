@@ -11,6 +11,7 @@ export interface UserResult {
   name: string
   username: string;
   createdAt: string;
+  photoUrl: string | undefined;
 }
 
 export const getAllUsers: controllerFunction = async (req, res, next) => {
@@ -156,7 +157,7 @@ export const logUserIn: controllerFunction = async (req, res, next) => {
   try {
     const userRepository = getRepository(User);
     user = await userRepository.findOne({
-      select: ['id', 'name', 'username', 'createdAt', 'password'],
+      select: ['id', 'name', 'username', 'photoUrl', 'createdAt', 'password'],
       where: { username },
     });
 
@@ -189,6 +190,7 @@ export const logUserIn: controllerFunction = async (req, res, next) => {
           name: user.name,
           username: user.username,
           createdAt: user.createdAt.toString(),
+          photoUrl: user.photoUrl,
         };
 
         res.send({
