@@ -1,7 +1,7 @@
 import {
   FC, useState, useEffect, Dispatch, SetStateAction,
 } from 'react';
-import { RouteComponentProps, Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import fetchJSON from './lib/fetchJSON';
 import { UserResult } from './lib/ApiResult';
 import UserPageMain from './components/UserPageMain';
@@ -40,7 +40,6 @@ const UserPage: FC<Props> = ({ match }) => {
 
   return (
     <>
-      <Link to="/logout">Log out</Link>
       <Navbar />
       <UserPageMain
         apiURL={apiURL}

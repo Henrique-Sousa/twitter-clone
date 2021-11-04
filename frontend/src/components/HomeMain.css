@@ -4,6 +4,21 @@
   --border: 1px solid #eee;
 }
 
+@media only screen and (max-width: 768px) {
+  .home__main header a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .home__main header a {
+    display: none;
+  }
+}
+
 .home__main {
   width: 100%; 
 }

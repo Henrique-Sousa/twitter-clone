@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import HomeMain from './components/HomeMain';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -18,7 +18,6 @@ const Home: FC = () => {
   return (
     token ? (
       <>
-        <Link to="/logout">Log out</Link>
         <Navbar />
         <HomeMain
           apiURL={apiURL}

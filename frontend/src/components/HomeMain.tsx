@@ -1,4 +1,5 @@
 import { FC, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import WhatsHappening from './WhatsHappening';
 import './HomeMain.css';
 import { TweetResult, UserResult } from '../lib/ApiResult';
@@ -53,6 +54,7 @@ const HomeMain: FC<Props> = ({ apiURL, loggedUser }: Props) => {
     <main className="home__main">
       <header>
         <h1 id="home">Home</h1>
+        <Link to="/logout">Log out</Link>
       </header>
       <WhatsHappening
         loggedUser={loggedUser}
