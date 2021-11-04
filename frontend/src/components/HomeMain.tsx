@@ -51,9 +51,9 @@ const HomeMain: FC<Props> = ({ apiURL, loggedUser }: Props) => {
   }, []);
 
   return (
-    <main className="home__main">
+    <main>
       <header>
-        <h1 id="home">Home</h1>
+        <h1>Home</h1>
         <Link to="/logout">Log out</Link>
       </header>
       <WhatsHappening

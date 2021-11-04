@@ -52,9 +52,9 @@ const UserPageMain: FC<Props> = ({ apiURL, user, loggedUser }: Props) => {
   }, []);
 
   return (
-    <main className="user-page__main">
+    <main>
       <header>
-        <h1 id="user-page">{user ? user.name : 'Profile'}</h1>
+        <h1>{user ? user.name : 'Profile'}</h1>
       </header>
       <Feed
         loggedUser={loggedUser}

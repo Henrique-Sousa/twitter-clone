@@ -5,7 +5,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .home__main header a {
+  main header a {
     display: block;
     text-decoration: none;
     color: black;
@@ -14,30 +14,30 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .home__main header a {
+  main header a {
     display: none;
   }
 }
 
-.home__main {
+main {
   width: 100%; 
 }
 
 @media only screen and (min-width: 768px) {
-  .home__main {
+  main {
     width: 600px;
     margin-left: 130px; 
   }
 }
 
 @media only screen and (min-width: 992px) {
-  .home__main {
+  main {
     width: 600px;
     margin-left: 318px; 
   }
 }
 
-.home__main > * {
+main > * {
   border: var(--border);
   border-top: none;
 }
@@ -48,6 +48,6 @@ header {
   background-color: white;
 }
 
-#home {
+main h1 {
   padding: 15px;
 }
