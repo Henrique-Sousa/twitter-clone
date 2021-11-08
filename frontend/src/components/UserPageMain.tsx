@@ -52,7 +52,7 @@ const UserPageMain: FC<Props> = ({ apiURL, user, loggedUser }: Props) => {
 
   return (
     <main>
-      <header>
+      <header style={{ zIndex: 3 }}>
         <h1>{user ? user.name : 'Profile'}</h1>
       </header>
       <UserProfile

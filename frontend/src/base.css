@@ -9,3 +9,7 @@
   --primary-color: rgb(29, 155, 240);
   --light-gray: rgb(83, 100, 113);
 }
+
+.pl16 {
+  padding-left: 16px;
+}

@@ -51,7 +51,7 @@ const Tweet: FC<Props> = ({
   };
 
   return (
-    <article className="tweet">
+    <article className="tweet pl16">
       <Photo imageSrc={photoUrl} />
       <div>
         <Author name={name} username={username} date={date} />
