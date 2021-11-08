@@ -1,0 +1,14 @@
+.user-profile {
+  position: relative;
+}
+
+.user-profile img {
+  width: 120px;
+  height: 120px;
+  border: solid white 5px;
+  background: black;
+  position: absolute;
+  top: 120px;
+  left: 10px;
+}
+

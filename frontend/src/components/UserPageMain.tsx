@@ -3,6 +3,7 @@ import './UserPageMain.css';
 import { TweetResult, UserResult } from '../lib/ApiResult';
 import { TweetObject } from './Objects';
 import Feed from './Feed';
+import UserProfile from './UserProfile';
 import fetchJSON from '../lib/fetchJSON';
 
 interface Props {
@@ -12,8 +13,6 @@ interface Props {
 }
 
 const UserPageMain: FC<Props> = ({ apiURL, user, loggedUser }: Props) => {
-
-  console.log(user);
 
   const [tweets, setTweets] = useState<Array<TweetObject>>([]);
 
@@ -56,6 +55,10 @@ const UserPageMain: FC<Props> = ({ apiURL, user, loggedUser }: Props) => {
       <header>
         <h1>{user ? user.name : 'Profile'}</h1>
       </header>
+      <UserProfile
+        loggedUser={loggedUser}
+        user={user}
+      />
       <Feed
         loggedUser={loggedUser}
         tweets={tweets}

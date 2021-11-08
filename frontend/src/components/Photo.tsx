@@ -2,7 +2,7 @@ import { FC } from 'react';
 import './Photo.css';
 
 interface Props {
-  imageSrc: string;
+  imageSrc: string | undefined;
 }
 
 const Photo: FC<Props> = ({ imageSrc }) => (
