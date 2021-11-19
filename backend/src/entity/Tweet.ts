@@ -6,7 +6,7 @@ import User from './User';
 
 @Entity()
 export default class Tweet {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'tweet_id' })
   id!: number;
 
   @ManyToOne(() => User, (user) => user.tweets, { nullable: false })
@@ -15,6 +15,6 @@ export default class Tweet {
   @Column({ type: 'varchar', length: 280, nullable: false })
   text!: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 }
