@@ -5,11 +5,11 @@
 create a `.env` file based on `.env.sample` with your database credentials. \
 `NODE_ENV` must be `production`
 ```bash
-# generate jwt keys
-npm run keys
-
 # install dependencies
 npm i
+
+# generate jwt keys
+npm run keys
 
 # build the backend
 npm run build
